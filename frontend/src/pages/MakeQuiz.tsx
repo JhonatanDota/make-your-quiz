@@ -5,9 +5,12 @@ import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
 export default function MakeQuiz() {
   const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
   const localStorageData = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
-  const initialQuizQuestions = localStorageData ? JSON.parse(localStorageData) : [];
-  
-  const [quizQuestions, setQuizQuestions] = useState<QuizQuestionModel[]>(initialQuizQuestions);
+  const initialQuizQuestions = localStorageData
+    ? JSON.parse(localStorageData)
+    : [];
+
+  const [quizQuestions, setQuizQuestions] =
+    useState<QuizQuestionModel[]>(initialQuizQuestions);
 
   function addQuizQuestion() {
     const newQuestion: QuizQuestionModel = {
@@ -19,16 +22,21 @@ export default function MakeQuiz() {
   }
 
   useEffect(() => {
-    localStorage.setItem(LOCAL_STORAGE_ITEM_NAME, JSON.stringify(quizQuestions))
-  }, [quizQuestions])
-  
+    localStorage.setItem(
+      LOCAL_STORAGE_ITEM_NAME,
+      JSON.stringify(quizQuestions)
+    );
+  }, [quizQuestions]);
 
   function handleQuizQuestionTitleChange(
     event: React.ChangeEvent<HTMLInputElement>,
     quizQuestionIndex: number
   ) {
     const newQuizQuestionTitle = event.target.value;
-    updateQuizQuestion(quizQuestionIndex, { ...quizQuestions[quizQuestionIndex], question: newQuizQuestionTitle });
+    updateQuizQuestion(quizQuestionIndex, {
+      ...quizQuestions[quizQuestionIndex],
+      question: newQuizQuestionTitle,
+    });
   }
 
   function removeQuizQuestion(index: number) {
@@ -49,7 +57,7 @@ export default function MakeQuiz() {
     const updatedQuestions = [...quizQuestions];
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
-    const newAlternative: QuizQuestionAlternative= {
+    const newAlternative: QuizQuestionAlternative = {
       question: "New Alternative",
       isCorrect: false,
     };
@@ -84,7 +92,8 @@ export default function MakeQuiz() {
     const quizQuestionAlternatives = quizQuestion.alternatives;
 
     for (let i: number = 0; i < quizQuestionAlternatives.length; i++) {
-      quizQuestionAlternatives[i].isCorrect = i === quizQuestionAlternativeIndex;
+      quizQuestionAlternatives[i].isCorrect =
+        i === quizQuestionAlternativeIndex;
     }
 
     updateQuizQuestion(quizQuestionIndex, quizQuestion);
@@ -108,19 +117,25 @@ export default function MakeQuiz() {
 
   return (
     <div className="flex flex-col gap-6 text-white text-center">
-      <h1>Faça o seu quiz</h1>
-      <div>
-        <label htmlFor="">Titulo</label>
-        <input type="text" />
+      <p className="text-2xl font-bold">Faça o seu quiz</p>
+      <div className="flex flex-col gap-2">
+        <label className="text-lg font-bold ">Título</label>
+        <input
+          className="p-2 bg-gray-950 border-4 font-bold border-yellow-400"
+          type="text"
+        />
       </div>
-      <div>
-        <label htmlFor="">Descrição</label>
-        <input type="text" />
+      <div className="flex flex-col gap-2">
+        <label className="text-lg font-bold ">Descrição</label>
+        <input
+          className="p-2 bg-gray-950 border-4 font-bold border-yellow-400"
+          type="text"
+        />
       </div>
 
       <div className="flex flex-col gap-5">
         {quizQuestions.map((quizQuestion, quizQuestionIndex) => (
-          <div className="flex flex-col border" key={quizQuestion.id}>
+          <div className="flex flex-col p-2 border-2 border-yellow-400" key={quizQuestion.id}>
             <button onClick={() => removeQuizQuestion(quizQuestionIndex)}>
               Remover
             </button>

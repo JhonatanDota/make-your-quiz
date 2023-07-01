@@ -8,7 +8,7 @@ export default function AppRoutes() {
     <BrowserRouter>
       <div className="flex">
         <Menu />
-        <div className="p-8 w-full">
+        <div className="p-10 w-full">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/make-yours" element={<MakeQuiz />} />
