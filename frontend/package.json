@@ -1,26 +1,24 @@
 {
-  "name": "meu-app-react",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.3.0",
+    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "axios": "^1.3.3",
-    "bulma": "^0.9.4",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.26",
+    "@types/react": "^18.2.6",
+    "@types/react-dom": "^18.2.4",
+    "axios": "^1.4.0",
     "react": "^18.2.0",
-    "react-datepicker": "^4.11.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.43.1",
-    "react-icons": "^4.7.1",
-    "react-input-mask": "^2.0.4",
-    "react-loading-skeleton": "^3.1.1",
-    "react-modal": "^3.16.1",
-    "react-moment": "^1.1.3",
-    "react-number-format": "^5.1.4",
-    "react-router-dom": "^6.4.0",
+    "react-hook-form": "^7.44.1",
+    "react-hot-toast": "^2.4.1",
+    "react-icons": "^4.8.0",
+    "react-router-dom": "^6.11.1",
     "react-scripts": "5.0.1",
-    "react-toastify": "^9.1.1",
+    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -48,6 +46,6 @@
     ]
   },
   "devDependencies": {
-    "tailwindcss": "^3.2.7"
+    "tailwindcss": "^3.3.2"
   }
 }
