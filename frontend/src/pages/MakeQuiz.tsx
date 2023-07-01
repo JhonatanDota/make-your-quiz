@@ -1,9 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
 
 export default function MakeQuiz() {
-  const [quizQuestions, setQuizQuestions] = useState<QuizQuestionModel[]>([]);
+  const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
+  const localStorageData = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
+  const initialQuizQuestions = localStorageData ? JSON.parse(localStorageData) : [];
+  
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestionModel[]>(initialQuizQuestions);
 
   function addQuizQuestion() {
     const newQuestion: QuizQuestionModel = {
@@ -13,6 +17,11 @@ export default function MakeQuiz() {
 
     setQuizQuestions([...quizQuestions, newQuestion]);
   }
+
+  useEffect(() => {
+    localStorage.setItem(LOCAL_STORAGE_ITEM_NAME, JSON.stringify(quizQuestions))
+  }, [quizQuestions])
+  
 
   function handleQuizQuestionTitleChange(
     event: React.ChangeEvent<HTMLInputElement>,
