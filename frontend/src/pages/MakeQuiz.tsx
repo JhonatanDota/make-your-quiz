@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
-import { BsFillTrash3Fill } from "react-icons/bs";
+import { BsFillTrash3Fill, BsFillPatchMinusFill, BsFillPatchPlusFill } from "react-icons/bs";
 
 export default function MakeQuiz() {
   const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
@@ -137,7 +137,11 @@ export default function MakeQuiz() {
       <div className="flex flex-col gap-5">
         {quizQuestions.map((quizQuestion, quizQuestionIndex) => (
           <div
-            className="flex flex-col gap-4 p-2 border-4 border-yellow-400"
+            className={`flex flex-col gap-4 p-2 border-4 ${
+              quizQuestionIndex % 2 == 0
+                ? "border-yellow-400"
+                : "border-blue-100"
+            }`}
             key={quizQuestion.id}
           >
             <p className="uppercase font-bold">
@@ -201,16 +205,25 @@ export default function MakeQuiz() {
                 </div>
               )
             )}
-            <button
-              onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
-            >
-              Adicionar Alternativa
-            </button>
+            <div className="flex justify-around">
+              <button
+                onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
+              >
+                <BsFillPatchPlusFill size={30}/>
+              </button>
+              <button
+                onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
+              >
+                <BsFillPatchMinusFill size={30}/>
+              </button>
+            </div>
           </div>
         ))}
       </div>
 
-      <button onClick={addQuizQuestion}>Adicionar pergunta</button>
+      <button className="p-3 font-bold bg-purple-600" onClick={addQuizQuestion}>
+        Adicionar pergunta
+      </button>
     </div>
   );
 }
