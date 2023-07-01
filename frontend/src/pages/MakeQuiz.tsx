@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
+import { BsFillTrash3Fill } from "react-icons/bs";
 
 export default function MakeQuiz() {
   const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
@@ -116,75 +117,87 @@ export default function MakeQuiz() {
   }
 
   return (
-    <div className="flex flex-col gap-6 text-white text-center">
+    <div className="flex flex-col gap-y-4 text-white text-center">
       <p className="text-2xl font-bold">Faça o seu quiz</p>
       <div className="flex flex-col gap-2">
         <label className="text-lg font-bold ">Título</label>
         <input
-          className="p-2 bg-gray-950 border-4 font-bold border-yellow-400"
+          className="p-2 bg-gray-950 border-4 rounded-md font-bold border-yellow-400"
           type="text"
         />
       </div>
       <div className="flex flex-col gap-2">
         <label className="text-lg font-bold ">Descrição</label>
         <input
-          className="p-2 bg-gray-950 border-4 font-bold border-yellow-400"
+          className="p-2 bg-gray-950 border-4 rounded-md font-bold border-yellow-400"
           type="text"
         />
       </div>
 
       <div className="flex flex-col gap-5">
         {quizQuestions.map((quizQuestion, quizQuestionIndex) => (
-          <div className="flex flex-col p-2 border-2 border-yellow-400" key={quizQuestion.id}>
-            <button onClick={() => removeQuizQuestion(quizQuestionIndex)}>
-              Remover
-            </button>
-            <h1>Questao: {quizQuestionIndex + 1}</h1>
+          <div
+            className="flex flex-col gap-4 p-2 border-4 border-yellow-400"
+            key={quizQuestion.id}
+          >
+            <p className="uppercase font-bold">
+              Questao: {quizQuestionIndex + 1}
+            </p>
 
             <input
-              className="text-cyan-300"
+              className="p-2 bg-gray-950 border-2 font-bold border-yellow-400"
               type="text"
               value={quizQuestion.question}
               onChange={(event) =>
                 handleQuizQuestionTitleChange(event, quizQuestionIndex)
               }
             />
+            <button
+              className="flex items-center justify-center p-2 font-bold bg-red-500"
+              onClick={() => removeQuizQuestion(quizQuestionIndex)}
+            >
+              <BsFillTrash3Fill />
+            </button>
 
             {quizQuestion.alternatives.map(
               (alternative, quizQuestionAlternativeIndex) => (
-                <div key={alternative.id}>
-                  <input
-                    className="text-black"
-                    type="text"
-                    value={alternative.question}
-                    onChange={(event) =>
-                      handleAlternativeTextChange(
-                        event,
-                        quizQuestionIndex,
-                        quizQuestionAlternativeIndex
-                      )
-                    }
-                  />
-                  <button
-                    onClick={() =>
-                      removeQuizQuestionAlternative(
-                        quizQuestionIndex,
-                        quizQuestionAlternativeIndex
-                      )
-                    }
-                  >
-                    Remove
-                  </button>
-                  <input
-                    type="radio"
-                    checked={alternative.isCorrect}
-                    onChange={() =>
-                      handleAlternativeIsCorrectChange(
-                        quizQuestionIndex,
-                        quizQuestionAlternativeIndex
-                      )
-                    }
-                  />
+                <div className="flex flex-col gap-4" key={alternative.id}>
+                  <div className="flex justify-around items-center">
+                    <input
+                      className="p-1 text-sm bg-gray-950 border-2 font-bold border-yellow-400"
+                      type="text"
+                      value={alternative.question}
+                      onChange={(event) =>
+                        handleAlternativeTextChange(
+                          event,
+                          quizQuestionIndex,
+                          quizQuestionAlternativeIndex
+                        )
+                      }
+                    />
+                    <input
+                      type="radio"
+                      className="appearance-none w-4 h-4 rounded border-2 border-white checked:bg-green-500 checked:border-transparent"
+                      checked={alternative.isCorrect}
+                      onChange={() =>
+                        handleAlternativeIsCorrectChange(
+                          quizQuestionIndex,
+                          quizQuestionAlternativeIndex
+                        )
+                      }
+                    />
+                    <button
+                      className="flex justify-center"
+                      onClick={() =>
+                        removeQuizQuestionAlternative(
+                          quizQuestionIndex,
+                          quizQuestionAlternativeIndex
+                        )
+                      }
+                    >
+                      <BsFillTrash3Fill />
+                    </button>
+                  </div>
                 </div>
               )
             )}

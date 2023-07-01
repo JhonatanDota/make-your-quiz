@@ -23,7 +23,6 @@ class AuthController extends Controller
             $token = auth()->attempt($credentials);
 
             $user = Auth::user();
-            $company = $user->company;
 
             return response()->json([
                 'user' => Auth::user(),
