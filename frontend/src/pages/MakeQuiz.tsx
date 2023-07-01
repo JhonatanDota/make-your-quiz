@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
-import { BsFillTrash3Fill, BsFillPatchMinusFill, BsFillPatchPlusFill } from "react-icons/bs";
+import { BsFillTrash3Fill, BsPlusCircleFill } from "react-icons/bs";
 
 export default function MakeQuiz() {
   const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
@@ -205,16 +205,11 @@ export default function MakeQuiz() {
                 </div>
               )
             )}
-            <div className="flex justify-around">
+            <div className="w-full">
               <button
                 onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
               >
-                <BsFillPatchPlusFill size={30}/>
-              </button>
-              <button
-                onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
-              >
-                <BsFillPatchMinusFill size={30}/>
+                <BsPlusCircleFill size={30}/>
               </button>
             </div>
           </div>
