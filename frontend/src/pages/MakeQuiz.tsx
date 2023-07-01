@@ -1,12 +1,12 @@
 import { useState } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
+import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
 
 export default function MakeQuiz() {
   const [quizQuestions, setQuizQuestions] = useState<QuizQuestionModel[]>([]);
 
   function addQuizQuestion() {
     const newQuestion: QuizQuestionModel = {
-      id: quizQuestions.length,
       question: "new",
       alternatives: [],
     };
@@ -19,11 +19,7 @@ export default function MakeQuiz() {
     quizQuestionIndex: number
   ) {
     const newQuizQuestionTitle = event.target.value;
-    const updatedQuizQuestion = quizQuestions[quizQuestionIndex];
-
-    updatedQuizQuestion.question = newQuizQuestionTitle;
-
-    updateQuizQuestion(quizQuestionIndex, updatedQuizQuestion);
+    updateQuizQuestion(quizQuestionIndex, { ...quizQuestions[quizQuestionIndex], question: newQuizQuestionTitle });
   }
 
   function removeQuizQuestion(index: number) {
@@ -44,8 +40,7 @@ export default function MakeQuiz() {
     const updatedQuestions = [...quizQuestions];
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
-    const newAlternative = {
-      id: quizQuestion.alternatives.length,
+    const newAlternative: QuizQuestionAlternative= {
       question: "New Alternative",
       isCorrect: false,
     };
@@ -79,13 +74,8 @@ export default function MakeQuiz() {
 
     const quizQuestionAlternatives = quizQuestion.alternatives;
 
-    for (let i = 0; i < quizQuestionAlternatives.length; i++) {
-      if (i != quizQuestionAlternativeIndex)
-        quizQuestionAlternatives[i].isCorrect = false;
-      else {
-        console.log(quizQuestionAlternativeIndex);
-        quizQuestionAlternatives[i].isCorrect = true;
-      }
+    for (let i: number = 0; i < quizQuestionAlternatives.length; i++) {
+      quizQuestionAlternatives[i].isCorrect = i === quizQuestionAlternativeIndex;
     }
 
     updateQuizQuestion(quizQuestionIndex, quizQuestion);
@@ -138,7 +128,7 @@ export default function MakeQuiz() {
 
             {quizQuestion.alternatives.map(
               (alternative, quizQuestionAlternativeIndex) => (
-                <div>
+                <div key={alternative.id}>
                   <input
                     className="text-black"
                     type="text"

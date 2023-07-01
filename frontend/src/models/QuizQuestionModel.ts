@@ -1,7 +1,7 @@
-import QuizQuestionAlternatives from "./QuizQuestionAlternatives";
+import QuizQuestionAlternatives from "./QuizQuestionAlternative";
 
 export default interface QuizQuestionModel {
-    id: number,
+    id?: number,
     question: string,
     alternatives: QuizQuestionAlternatives[]
 }
