@@ -3,7 +3,11 @@ import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
 import { BsFillTrash3Fill, BsPlusCircleFill } from "react-icons/bs";
 
-export default function MakeQuiz() {
+interface MakeQuizProps {
+  isMenuOpen: boolean;
+}
+
+export default function MakeQuiz(props: MakeQuizProps) {
   const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
   const localStorageData = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
   const initialQuizQuestions = localStorageData
@@ -166,7 +170,7 @@ export default function MakeQuiz() {
             {quizQuestion.alternatives.map(
               (alternative, quizQuestionAlternativeIndex) => (
                 <div className="flex flex-col gap-4" key={alternative.id}>
-                  <div className="flex justify-around items-center">
+                  <div className={`flex justify-around items-center ${props.isMenuOpen ? "flex-col gap-y-3" : "flex-row"}`}>
                     <input
                       className="p-1 text-sm bg-gray-950 border-2 font-bold border-yellow-400"
                       type="text"
@@ -179,28 +183,30 @@ export default function MakeQuiz() {
                         )
                       }
                     />
-                    <input
-                      type="radio"
-                      className="appearance-none w-4 h-4 rounded border-2 border-white checked:bg-green-500 checked:border-transparent"
-                      checked={alternative.isCorrect}
-                      onChange={() =>
-                        handleAlternativeIsCorrectChange(
-                          quizQuestionIndex,
-                          quizQuestionAlternativeIndex
-                        )
-                      }
-                    />
-                    <button
-                      className="flex justify-center"
-                      onClick={() =>
-                        removeQuizQuestionAlternative(
-                          quizQuestionIndex,
-                          quizQuestionAlternativeIndex
-                        )
-                      }
-                    >
-                      <BsFillTrash3Fill />
-                    </button>
+                    <div className="flex gap-3">
+                      <input
+                        type="radio"
+                        className="appearance-none w-4 h-4 rounded border-2 border-white checked:bg-green-500 checked:border-transparent"
+                        checked={alternative.isCorrect}
+                        onChange={() =>
+                          handleAlternativeIsCorrectChange(
+                            quizQuestionIndex,
+                            quizQuestionAlternativeIndex
+                          )
+                        }
+                      />
+                      <button
+                        className="flex justify-center text-red-400"
+                        onClick={() =>
+                          removeQuizQuestionAlternative(
+                            quizQuestionIndex,
+                            quizQuestionAlternativeIndex
+                          )
+                        }
+                      >
+                        <BsFillTrash3Fill />
+                      </button>
+                    </div>
                   </div>
                 </div>
               )
@@ -209,7 +215,7 @@ export default function MakeQuiz() {
               <button
                 onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
               >
-                <BsPlusCircleFill size={30}/>
+                <BsPlusCircleFill size={30} />
               </button>
             </div>
           </div>

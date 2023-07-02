@@ -14,7 +14,7 @@ export default function AppRoutes() {
         <div className={`py-8 px-4 ${showMenu ? "ml-auto w-5/6" : "w-full"}`}>
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/make-yours" element={<MakeQuiz />} />
+            <Route path="/make-yours" element={<MakeQuiz isMenuOpen={showMenu} />} />
           </Routes>
         </div>
       </div>
