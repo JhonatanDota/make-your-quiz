@@ -2,9 +2,7 @@ import AppRoutes from './AppRoutes';
 
 function App() {
   return (
-    <div>
-        <AppRoutes/>
-    </div>
+      <AppRoutes/>
   );
 }
 

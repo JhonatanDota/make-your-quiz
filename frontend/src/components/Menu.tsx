@@ -3,13 +3,19 @@ import { NavLink } from "react-router-dom";
 import icon from "../assets/images/icon-quiz.png";
 import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from "react-icons/bs"
 
-export default function Menu() {
-  const [showMenu, setShowMenu] = useState(true);
+
+interface MenuProps {
+  showMenu: boolean,
+  setShowMenu: (show: boolean) => void
+}
+
+export default function Menu(props: MenuProps) {
+  const {showMenu, setShowMenu} = props
 
   return (
-    <div className="relative flex">
+    <div className="flex fixed h-full">
       {showMenu && (
-        <div className="flex flex-col items-center justify-between w-16 px-2 py-6 h-screen bg-gray-950">
+        <div className="flex flex-col items-center justify-between w-16 px-2 py-6 bg-gray-950">
           <div>
             <img src={icon} alt="icon" />
           </div>
