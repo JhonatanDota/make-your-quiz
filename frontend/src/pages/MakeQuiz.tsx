@@ -22,8 +22,6 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const [quizQuestionIndexToDelete, setQuizQuestionIndexToDelete] =
     useState<number>(-1);
 
-  const [toDisableDoneQuiz, setToDisableDoneQuiz] = useState(false);
-
   const [quizTitle, setQuizTitle] = useState("");
   const [quizDescription, setQuizDescription] = useState("");
   const [quizQuestions, setQuizQuestions] =
@@ -149,9 +147,55 @@ export default function MakeQuiz(props: MakeQuizProps) {
       return false;
     }
 
+    return true;
+  }
+
+  function checkQuizQuestions(): boolean {
     if (quizQuestions.length == 0) {
       toast.error("Adicione uma questão para o Quiz.");
       return false;
+    }
+
+    for (let quizIndex = 0; quizIndex < quizQuestions.length; quizIndex++) {
+      let quizQuestion = quizQuestions[quizIndex];
+      let alternatives: QuizQuestionAlternative[] = quizQuestion.alternatives;
+      let haveCorrectAlternative = false;
+
+      if (!quizQuestion.question) {
+        toast.error(`A Questão ${quizIndex + 1} não possue pergunta.`);
+        return false;
+      }
+
+      if (alternatives.length == 0) {
+        toast.error(`A Questão ${quizIndex + 1} não possue alternativas.`);
+        return false;
+      }
+
+      for (
+        let alternativeIndex = 0;
+        alternativeIndex < alternatives.length;
+        alternativeIndex++
+      ) {
+        let alternative: QuizQuestionAlternative =
+          alternatives[alternativeIndex];
+
+        if (!alternative.question) {
+          toast.error(
+            `A Alternativa ${alternativeIndex + 1} da Questão ${
+              quizIndex + 1
+            } não possui texto.`
+          );
+          return false;
+        }
+        if (alternative.isCorrect) haveCorrectAlternative = true;
+      }
+
+      if (haveCorrectAlternative == false) {
+        toast.error(
+          `Não existe Alternativa correta na Questão ${quizIndex + 1}.`
+        );
+        return false;
+      }
     }
 
     return true;
@@ -159,12 +203,15 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
   function doneQuiz() {
     if (checkQuizBasicData() == false) return;
+    if (checkQuizQuestions() == false) return;
 
     const quizData: QuizModel = {
       title: quizTitle,
       description: quizDescription,
       questions: quizQuestions,
     };
+
+    alert("vai criar em");
   }
 
   return (
@@ -305,10 +352,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
       <button
         onClick={doneQuiz}
-        disabled={toDisableDoneQuiz}
-        className={`md:w-1/3 md:m-auto p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500 ${
-          toDisableDoneQuiz ? "cursor-not-allowed opacity-50" : ""
-        }`}
+        className="md:w-1/3 md:m-auto p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500"
       >
         Concluir Quiz
       </button>
