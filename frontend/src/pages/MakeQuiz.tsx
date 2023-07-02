@@ -176,7 +176,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
               />
             </div>
             <button
-              className="flex items-center justify-center rounded-md text-md md:text-3xl md:w-1/8 md:m-auto p-2 md:p-8 font-bold bg-red-500"
+              className="flex items-center justify-center rounded-md text-md md:text-3xl md:w-1/4 md:m-auto p-2 md:p-4 font-bold bg-red-500"
               onClick={() => removeQuizQuestionCheck(quizQuestionIndex)}
             >
               <BsFillTrash3Fill />
