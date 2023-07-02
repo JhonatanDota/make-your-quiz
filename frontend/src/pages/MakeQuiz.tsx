@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
 import { BsFillTrash3Fill, BsFillPlusSquareFill } from "react-icons/bs";
+import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 
 interface MakeQuizProps {
   isMenuOpen: boolean;
@@ -13,6 +14,11 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const initialQuizQuestions = localStorageData
     ? JSON.parse(localStorageData)
     : [];
+
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
+    useState(false);
+  const [quizQuestionIndexToDelete, setQuizQuestionIndexToDelete] =
+    useState<number>(-1);
 
   const [quizQuestions, setQuizQuestions] =
     useState<QuizQuestionModel[]>(initialQuizQuestions);
@@ -44,7 +50,13 @@ export default function MakeQuiz(props: MakeQuizProps) {
     });
   }
 
+  function removeQuizQuestionCheck(index: number) {
+    setQuizQuestionIndexToDelete(index);
+    setShowDeleteConfirmationModal(true);
+  }
+
   function removeQuizQuestion(index: number) {
+    console.log("sad");
     const updatedQuestions = quizQuestions.filter((_, i) => i !== index);
     setQuizQuestions(updatedQuestions);
   }
@@ -141,7 +153,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
       <div className="flex flex-col gap-16 md:w-2/3 mt-6 md:m-auto md:mt-10">
         {quizQuestions.map((quizQuestion, quizQuestionIndex) => (
           <div
-            className={`flex flex-col gap-6 md:gap-10 p-4 border-4 md:border-8 ${
+            className={`flex flex-col gap-6 md:gap-10 rounded-md p-4 border-4 md:border-8 ${
               quizQuestionIndex % 2 == 0
                 ? "border-yellow-400"
                 : "border-blue-100"
@@ -165,7 +177,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
             </div>
             <button
               className="flex items-center justify-center rounded-md text-md md:text-3xl md:w-1/8 md:m-auto p-2 md:p-8 font-bold bg-red-500"
-              onClick={() => removeQuizQuestion(quizQuestionIndex)}
+              onClick={() => removeQuizQuestionCheck(quizQuestionIndex)}
             >
               <BsFillTrash3Fill />
             </button>
@@ -175,7 +187,9 @@ export default function MakeQuiz(props: MakeQuizProps) {
                 <div className="flex flex-col gap-6" key={alternative.id}>
                   <div
                     className={`flex justify-around md:justify-center gap-x-4 items-center ${
-                      props.isMenuOpen ? "flex-col md:flex-row gap-y-3" : "flex-row"
+                      props.isMenuOpen
+                        ? "flex-col md:flex-row gap-y-3"
+                        : "flex-row"
                     }`}
                   >
                     <input
@@ -218,18 +232,28 @@ export default function MakeQuiz(props: MakeQuizProps) {
                 </div>
               )
             )}
-              <button
-                className="w-1/2 md:w-1/4 m-auto flex justify-center items-center text-md md:text-2xl gap-2 rounded-md bg-green-400 font-bold p-2 md:p-4 text-slate-700"
-                onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
-              >
-                <BsFillPlusSquareFill/>
-                Alternativa
-              </button>
+            <button
+              className="w-1/2 md:w-1/4 m-auto flex justify-center items-center text-md md:text-2xl gap-2 rounded-md bg-yellow-400 font-bold p-2 md:p-4 text-black"
+              onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
+            >
+              <BsFillPlusSquareFill />
+              Alternativa
+            </button>
           </div>
         ))}
       </div>
 
-      <button className="md:w-1/3 md:m-auto p-4 md:p-6 text-md md:text-2xl font-bold bg-purple-600" onClick={addQuizQuestion}>
+      <DeleteConfirmationModal
+        isOpen={showDeleteConfirmationModal}
+        setIsOpen={setShowDeleteConfirmationModal}
+        message={"Excluir a questão ?"}
+        onConfirmation={() => removeQuizQuestion(quizQuestionIndexToDelete)}
+      />
+
+      <button
+        className="md:w-1/3 md:m-auto p-4 md:p-6 text-md md:text-2xl font-bold bg-purple-600"
+        onClick={addQuizQuestion}
+      >
         Adicionar Questão
       </button>
     </div>
