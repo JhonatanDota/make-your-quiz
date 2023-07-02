@@ -285,7 +285,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
                     }`}
                   >
                     <input
-                      className="p-1 md:p-3 text-sm md:text-2xl bg-gray-950 border-2 font-bold border-yellow-400"
+                      className="p-1 md:p-3 text-sm md:text-lg lg:text-2xl bg-gray-950 border-2 font-bold border-yellow-400"
                       type="text"
                       value={alternative.question}
                       onChange={(event) =>
@@ -325,7 +325,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
               )
             )}
             <button
-              className="w-1/2 md:w-1/4 m-auto flex justify-center items-center text-md md:text-2xl gap-2 rounded-md bg-yellow-400 font-bold p-2 md:p-4 text-black"
+              className="w-1/2 md:w-1/4 m-auto flex justify-center items-center text-md md:text-md lg:text-2xl gap-2 rounded-md bg-yellow-400 font-bold p-2 md:p-4 text-black"
               onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
             >
               <BsFillPlusSquareFill />
@@ -341,21 +341,22 @@ export default function MakeQuiz(props: MakeQuizProps) {
         message={"Excluir a questão ?"}
         onConfirmation={() => removeQuizQuestion(quizQuestionIndexToDelete)}
       />
+      <div className="flex justify-center gap-5">
+        <button
+          className="rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-purple-600"
+          onClick={addQuizQuestion}
+        >
+          Adicionar Questão
+        </button>
 
-      <button
-        className="md:w-1/3 md:m-auto p-4 md:p-6 text-md md:text-2xl font-bold bg-purple-600"
-        onClick={addQuizQuestion}
-      >
-        Adicionar Questão
-      </button>
-
-      <button
-        onClick={doneQuiz}
-        className="md:w-1/3 md:m-auto p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500"
-      >
-        Concluir Quiz
-      </button>
-      <Toaster position="top-right" />
+        <button
+          onClick={doneQuiz}
+          className="rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500"
+        >
+          Concluir Quiz
+        </button>
+      </div>
+        <Toaster position="top-right" />
     </div>
   );
 }
