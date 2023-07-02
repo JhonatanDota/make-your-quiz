@@ -3,6 +3,8 @@ import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
 import { BsFillTrash3Fill, BsFillPlusSquareFill } from "react-icons/bs";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
+import QuizModel from "../models/QuizModel";
+import { Toaster, toast } from "react-hot-toast";
 
 interface MakeQuizProps {
   isMenuOpen: boolean;
@@ -20,6 +22,10 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const [quizQuestionIndexToDelete, setQuizQuestionIndexToDelete] =
     useState<number>(-1);
 
+  const [toDisableDoneQuiz, setToDisableDoneQuiz] = useState(false);
+
+  const [quizTitle, setQuizTitle] = useState("");
+  const [quizDescription, setQuizDescription] = useState("");
   const [quizQuestions, setQuizQuestions] =
     useState<QuizQuestionModel[]>(initialQuizQuestions);
 
@@ -132,6 +138,35 @@ export default function MakeQuiz(props: MakeQuizProps) {
     updateQuizQuestion(quizQuestionIndex, quizQuestion);
   }
 
+  function checkQuizBasicData(): boolean {
+    if (!quizTitle) {
+      toast.error("Digite um título para o Quiz.");
+      return false;
+    }
+
+    if (!quizDescription) {
+      toast.error("Digite uma descrição para o Quiz.");
+      return false;
+    }
+
+    if (quizQuestions.length == 0) {
+      toast.error("Adicione uma questão para o Quiz.");
+      return false;
+    }
+
+    return true;
+  }
+
+  function doneQuiz() {
+    if (checkQuizBasicData() == false) return;
+
+    const quizData: QuizModel = {
+      title: quizTitle,
+      description: quizDescription,
+      questions: quizQuestions,
+    };
+  }
+
   return (
     <div className="flex flex-col gap-y-4 md:gap-y-8 text-white text-center">
       <p className="text-2xl md:text-6xl font-bold">Faça o seu quiz</p>
@@ -140,6 +175,10 @@ export default function MakeQuiz(props: MakeQuizProps) {
         <input
           className="text-lg md:text-4xl p-2 md:p-6 bg-gray-950 border-4 md:border-8 rounded-md font-bold border-yellow-400"
           type="text"
+          value={quizTitle}
+          onChange={(event) => {
+            setQuizTitle(event.target.value);
+          }}
         />
       </div>
       <div className="flex flex-col gap-2 md:gap-6 md:w-1/2 md:m-auto">
@@ -147,6 +186,10 @@ export default function MakeQuiz(props: MakeQuizProps) {
         <input
           className="text-lg md:text-4xl p-2 md:p-6 bg-gray-950 border-4 md:border-8 rounded-md font-bold border-yellow-400"
           type="text"
+          value={quizDescription}
+          onChange={(event) => {
+            setQuizDescription(event.target.value);
+          }}
         />
       </div>
 
@@ -158,7 +201,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
                 ? "border-yellow-400"
                 : "border-blue-100"
             }`}
-            key={quizQuestion.id}
+            key={quizQuestionIndex}
           >
             <p className="text-lg mt-4 md:text-2xl uppercase font-bold">
               Questao: {quizQuestionIndex + 1}
@@ -184,7 +227,10 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
             {quizQuestion.alternatives.map(
               (alternative, quizQuestionAlternativeIndex) => (
-                <div className="flex flex-col gap-6" key={alternative.id}>
+                <div
+                  className="flex flex-col gap-6"
+                  key={quizQuestionAlternativeIndex}
+                >
                   <div
                     className={`flex justify-around md:justify-center gap-x-4 items-center ${
                       props.isMenuOpen
@@ -256,6 +302,17 @@ export default function MakeQuiz(props: MakeQuizProps) {
       >
         Adicionar Questão
       </button>
+
+      <button
+        onClick={doneQuiz}
+        disabled={toDisableDoneQuiz}
+        className={`md:w-1/3 md:m-auto p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500 ${
+          toDisableDoneQuiz ? "cursor-not-allowed opacity-50" : ""
+        }`}
+      >
+        Concluir Quiz
+      </button>
+      <Toaster position="top-right" />
     </div>
   );
 }
