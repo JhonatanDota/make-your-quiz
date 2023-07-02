@@ -29,7 +29,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
   function addQuizQuestion() {
     const newQuestion: QuizQuestionModel = {
-      question: "new",
+      question: "Nova Questão",
       alternatives: [],
     };
 
@@ -60,7 +60,6 @@ export default function MakeQuiz(props: MakeQuizProps) {
   }
 
   function removeQuizQuestion(index: number) {
-    console.log("sad");
     const updatedQuestions = quizQuestions.filter((_, i) => i !== index);
     setQuizQuestions(updatedQuestions);
   }
@@ -79,7 +78,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
     const newAlternative: QuizQuestionAlternative = {
-      question: "New Alternative",
+      question: "Nova Alternativa",
       isCorrect: false,
     };
 
