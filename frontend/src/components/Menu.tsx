@@ -1,33 +1,43 @@
-import { useState } from "react";
 import { NavLink } from "react-router-dom";
 import icon from "../assets/images/icon-quiz.png";
-import { BsFillArrowRightCircleFill, BsFillArrowLeftCircleFill } from "react-icons/bs"
-
+import {
+  BsFillArrowRightCircleFill,
+  BsFillArrowLeftCircleFill,
+  BsFillPlusSquareFill,
+  BsFillQuestionSquareFill,
+  BsFillInfoSquareFill,
+} from "react-icons/bs";
 
 interface MenuProps {
-  showMenu: boolean,
-  setShowMenu: (show: boolean) => void
+  showMenu: boolean;
+  setShowMenu: (show: boolean) => void;
 }
 
 export default function Menu(props: MenuProps) {
-  const {showMenu, setShowMenu} = props
+  const { showMenu, setShowMenu } = props;
 
   return (
     <div className="flex fixed h-full">
       {showMenu && (
-        <div className="flex flex-col items-center justify-between w-16 px-2 py-6 bg-gray-950">
+        <div className="flex flex-col items-center justify-between w-16 md:w-32 px-2 py-6 bg-gray-950">
           <div>
             <img src={icon} alt="icon" />
           </div>
           <div className="h-2/3">
-            <ul className="flex flex-col gap-8 text-white text-sm">
+            <ul className="flex flex-col items-center gap-8 md:gap-16 text-white text-sm">
               <li>
                 <NavLink to="/make-yours">
-                  <button>Faça o seu</button>
+                  <button className="text-green-500 text-2xl md:text-5xl" title="Faça o seu">
+                    <BsFillPlusSquareFill />
+                  </button>
                 </NavLink>
               </li>
-              <li>Do one</li>
-              <li>About</li>
+              <button className="text-purple-400 text-2xl md:text-5xl" title="Faça o seu">
+                <BsFillQuestionSquareFill />
+              </button>
+              <button className="text-blue-400 text-2xl md:text-5xl" title="Faça o seu">
+                <BsFillInfoSquareFill />
+              </button>
             </ul>
           </div>
         </div>
@@ -35,17 +45,17 @@ export default function Menu(props: MenuProps) {
       <button
         className={`absolute ${
           showMenu ? "hidden" : "block"
-        } top-0 left-0 p-2 text-yellow-500`}
+        } top-5 left-0 p-2 text-yellow-500`}
         onClick={() => setShowMenu(true)}
       >
-        <BsFillArrowRightCircleFill size={30}/>
+        <BsFillArrowRightCircleFill className="text-4xl md:text-6xl" />
       </button>
       {showMenu && (
         <button
-          className="absolute top-0 left-16 p-2 text-yellow-500"
+          className="absolute top-5 left-16 md:left-32 p-2 text-yellow-500"
           onClick={() => setShowMenu(false)}
         >
-          <BsFillArrowLeftCircleFill size={30}/>
+          <BsFillArrowLeftCircleFill className="text-4xl md:text-6xl" />
         </button>
       )}
     </div>
