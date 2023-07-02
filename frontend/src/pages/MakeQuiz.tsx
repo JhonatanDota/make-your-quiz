@@ -172,14 +172,14 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
             {quizQuestion.alternatives.map(
               (alternative, quizQuestionAlternativeIndex) => (
-                <div className="flex flex-col gap-4" key={alternative.id}>
+                <div className="flex flex-col gap-6" key={alternative.id}>
                   <div
-                    className={`flex justify-around items-center ${
-                      props.isMenuOpen ? "flex-col gap-y-3" : "flex-row"
+                    className={`flex justify-around md:justify-center gap-x-4 items-center ${
+                      props.isMenuOpen ? "flex-col md:flex-row gap-y-3" : "flex-row"
                     }`}
                   >
                     <input
-                      className="p-1 text-sm bg-gray-950 border-2 font-bold border-yellow-400"
+                      className="p-1 md:p-3 text-sm md:text-2xl bg-gray-950 border-2 font-bold border-yellow-400"
                       type="text"
                       value={alternative.question}
                       onChange={(event) =>
@@ -190,10 +190,10 @@ export default function MakeQuiz(props: MakeQuizProps) {
                         )
                       }
                     />
-                    <div className="flex gap-3">
+                    <div className="flex items-center gap-3 md:gap-6">
                       <input
                         type="radio"
-                        className="appearance-none w-4 h-4 rounded border-2 border-white checked:bg-green-500 checked:border-transparent"
+                        className="appearance-none cursor-pointer w-4 md:w-8 h-4 md:h-8 rounded border-2 border-white checked:bg-green-500 checked:border-transparent"
                         checked={alternative.isCorrect}
                         onChange={() =>
                           handleAlternativeIsCorrectChange(
@@ -203,7 +203,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
                         }
                       />
                       <button
-                        className="flex justify-center text-red-400"
+                        className="flex justify-center text-md md:text-3xl text-red-400"
                         onClick={() =>
                           removeQuizQuestionAlternative(
                             quizQuestionIndex,
@@ -219,7 +219,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
               )
             )}
               <button
-                className="w-1/2 m-auto flex items-center gap-2 rounded-md bg-green-400 font-bold p-2 text-slate-700"
+                className="w-1/2 md:w-1/4 m-auto flex justify-center items-center text-md md:text-2xl gap-2 rounded-md bg-green-400 font-bold p-2 md:p-4 text-slate-700"
                 onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
               >
                 <BsFillPlusSquareFill/>
@@ -229,8 +229,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
         ))}
       </div>
 
-      <button className="p-3 font-bold bg-purple-600" onClick={addQuizQuestion}>
-        Adicionar pergunta
+      <button className="md:w-1/3 md:m-auto p-4 md:p-6 text-md md:text-2xl font-bold bg-purple-600" onClick={addQuizQuestion}>
+        Adicionar Questão
       </button>
     </div>
   );
