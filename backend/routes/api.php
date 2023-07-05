@@ -3,10 +3,7 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\ContractController;
+use App\Http\Controllers\QuizController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -18,9 +15,7 @@ use App\Http\Controllers\ContractController;
 |
 */
 
-Route::post('login', [AuthController::class, 'login']);
-Route::post('register', [AuthController::class, 'register']);
-
+Route::get('quizes', [QuizController::class, 'getAllQuizes']);
 
 
 Route::group(['middleware' => 'jwt.auth'], function () {
