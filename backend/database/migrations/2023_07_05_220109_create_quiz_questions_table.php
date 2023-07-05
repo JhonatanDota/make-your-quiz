@@ -17,7 +17,7 @@ class CreateQuizQuestionsTable extends Migration
             $table->id();
             $table->integer('quiz_id')->unsigned();
             $table->foreign('quiz_id')->references('id')->on('quizes');
-            $table->string('answer');
+            $table->string('question');
             $table->timestamps();
         });
     }

@@ -17,8 +17,8 @@ class CreateQuizesTable extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->integer('rating');
-            $table->integer('finished_count');
+            $table->integer('rating')->default(0);
+            $table->integer('finished_count')->default(0);
             $table->timestamps();
         });
     }

@@ -18,7 +18,7 @@ class CreateQuestionAlternativesTable extends Migration
             $table->integer('quiz_question_id')->unsigned();
             $table->foreign('quiz_question_id')->references('id')->on('quiz_questions');
             $table->string('choice');
-            $table->boolean('is_correct');
+            $table->boolean('is_correct')->default(false);
             $table->timestamps();
         });
     }

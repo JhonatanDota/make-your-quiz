@@ -5,6 +5,7 @@ import { BsFillTrash3Fill, BsFillPlusSquareFill } from "react-icons/bs";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 import QuizModel from "../models/QuizModel";
 import { Toaster, toast } from "react-hot-toast";
+import { createQuiz } from "../requests/quiz";
 
 interface MakeQuizProps {
   isMenuOpen: boolean;
@@ -200,7 +201,9 @@ export default function MakeQuiz(props: MakeQuizProps) {
     return true;
   }
 
-  function doneQuiz() {
+  function doneQuiz(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     if (checkQuizBasicData() == false) return;
     if (checkQuizQuestions() == false) return;
 
@@ -210,11 +213,24 @@ export default function MakeQuiz(props: MakeQuizProps) {
       questions: quizQuestions,
     };
 
-    alert("vai criar em");
+    handleCreateQuiz(quizData);
+  }
+
+  async function handleCreateQuiz(quizData: QuizModel){
+    try {
+      await createQuiz(quizData)
+        .then((response) => {
+          toast.success("Usuário Adicionado com Sucesso !");
+        })
+        .catch((error) => {});
+    } catch {}
   }
 
   return (
-    <div className="flex flex-col gap-y-4 md:gap-y-8 text-white text-center">
+    <form
+      className="flex flex-col gap-y-4 md:gap-y-8 text-white text-center"
+      onSubmit={(event) => doneQuiz(event)}
+    >
       <p className="text-2xl md:text-6xl font-bold">Faça o seu quiz</p>
       <div className="flex flex-col gap-2 md:gap-6 md:w-1/2 md:m-auto">
         <label className="text-lg md:text-4xl font-bold ">Título</label>
@@ -265,6 +281,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
               />
             </div>
             <button
+              type="button"
               className="flex items-center justify-center rounded-md text-md md:text-3xl md:w-1/4 md:m-auto p-2 md:p-4 font-bold bg-red-500"
               onClick={() => removeQuizQuestionCheck(quizQuestionIndex)}
             >
@@ -309,6 +326,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
                         }
                       />
                       <button
+                        type="button"
                         className="flex justify-center text-md md:text-3xl text-red-400"
                         onClick={() =>
                           removeQuizQuestionAlternative(
@@ -325,6 +343,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
               )
             )}
             <button
+              type="button"
               className="w-1/2 md:w-1/4 m-auto flex justify-center items-center text-md md:text-md lg:text-2xl gap-2 rounded-md bg-yellow-400 font-bold p-2 md:p-4 text-black"
               onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
             >
@@ -343,6 +362,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
       />
       <div className="flex justify-center gap-5">
         <button
+          type="button"
           className="rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-purple-600"
           onClick={addQuizQuestion}
         >
@@ -350,13 +370,13 @@ export default function MakeQuiz(props: MakeQuizProps) {
         </button>
 
         <button
-          onClick={doneQuiz}
+          type="submit"
           className="rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500"
         >
           Concluir Quiz
         </button>
       </div>
-        <Toaster position="top-right" />
-    </div>
+      <Toaster position="top-right" />
+    </form>
   );
 }

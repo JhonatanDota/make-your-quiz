@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\QuizRepository;
+use App\Requests\QuizRequest;
 
 class QuizController extends Controller
 {
@@ -20,7 +21,9 @@ class QuizController extends Controller
         return response()->json($this->quizRepository->getQuizById($id), 200);
     }
 
-    public function createQuiz(array $data){
+    public function createQuiz(QuizRequest $request){
+        $data = $request->all();
+        
         return response()->json($this->quizRepository->createQuiz($data));
     }
 }

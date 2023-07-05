@@ -36,4 +36,19 @@ class Quiz extends Model
         'rating' => 'integer',
         'finished_count' => 'integer',
     ];
+
+
+    /**
+     * Relationships
+    */
+
+    public function questions(){
+        return $this->hasMany(QuizQuestion::class);
+    }
+
+    public function getQuizWithQuestionsAndAlternatives()
+    {
+        return $this->load('questions.alternatives');
+    }
+
 }
