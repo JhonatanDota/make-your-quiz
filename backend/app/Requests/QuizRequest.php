@@ -14,8 +14,10 @@ class QuizRequest extends FormRequest
         return [
             'title' => ['required', 'min:3', 'max:75'],
             'description' => ['required', 'min:3', 'max:75'],
+
             'questions' => ['required', 'array'],
             'questions.*.question' => ['required', 'string'],
+
             'questions.*.alternatives' => ['required', 'array'],
             'questions.*.alternatives.*.question' => ['required', 'string'],
             'questions.*.alternatives.*.isCorrect' => ['required', 'boolean'],
@@ -73,8 +75,10 @@ class QuizRequest extends FormRequest
 
             'questions.*.alternatives.required' => 'O campo Alternatives é obrigatório para todas as perguntas.',
             'questions.*.alternatives.array' => 'O campo Alternatives deve ser um array para todas as perguntas.',
+
             'questions.*.alternatives.*.question.required' => 'O campo Question é obrigatório para todas as alternativas.',
             'questions.*.alternatives.*.question.string' => 'O campo Question deve ser uma string para todas as alternativas.',
+            
             'questions.*.alternatives.*.isCorrect.required' => 'O campo isCorrect é obrigatório para todas as alternativas.',
             'questions.*.alternatives.*.isCorrect.boolean' => 'O campo isCorrect deve ser um booleano para todas as alternativas.',
         ];

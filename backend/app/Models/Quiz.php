@@ -45,10 +45,4 @@ class Quiz extends Model
     public function questions(){
         return $this->hasMany(QuizQuestion::class);
     }
-
-    public function getQuizWithQuestionsAndAlternatives()
-    {
-        return $this->load('questions.alternatives');
-    }
-
 }

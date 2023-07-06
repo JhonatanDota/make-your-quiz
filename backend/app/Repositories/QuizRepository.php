@@ -46,7 +46,7 @@ class QuizRepository implements QuizRepositoryInterface
             }
         }
 
-        return $quiz->getQuizWithQuestionsAndAlternatives();
+        return $quiz;
     }
 
     public function updateQuiz(int $id, array $data) 
