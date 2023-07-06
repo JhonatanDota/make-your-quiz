@@ -218,7 +218,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     handleCreateQuiz(quizData);
   }
 
-  async function handleCreateQuiz(quizData: QuizModel){
+  async function handleCreateQuiz(quizData: QuizModel) {
     setCreatingQuiz(true);
     try {
       await createQuiz(quizData)
@@ -227,13 +227,13 @@ export default function MakeQuiz(props: MakeQuizProps) {
           resetQuiz();
         })
         .catch((error) => {});
-    } catch {}
-    finally{
+    } catch {
+    } finally {
       setCreatingQuiz(false);
     }
   }
 
-  function resetQuiz(){
+  function resetQuiz() {
     setQuizTitle("");
     setQuizDescription("");
     setQuizQuestions([]);
@@ -377,19 +377,20 @@ export default function MakeQuiz(props: MakeQuizProps) {
       />
       <div className="flex justify-center gap-5">
         <button
+          type="submit"
+          disabled={creatingQuiz}
+          className={`rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500 ${
+            creatingQuiz ? "animate-pulse bg-opacity-80 cursor-not-allowed" : ""
+          }`}
+        >
+          Concluir Quiz
+        </button>
+        <button
           type="button"
           className="rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-purple-600"
           onClick={addQuizQuestion}
         >
           Adicionar Questão
-        </button>
-
-        <button
-          type="submit"
-          disabled={creatingQuiz}
-          className={`rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500 ${creatingQuiz ? "animate-pulse bg-opacity-80 cursor-not-allowed" : ""}`}
-        >
-          Concluir Quiz
         </button>
       </div>
       <Toaster position="top-right" />
