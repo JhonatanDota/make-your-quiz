@@ -28,6 +28,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const [quizQuestions, setQuizQuestions] =
     useState<QuizQuestionModel[]>(initialQuizQuestions);
 
+  const [creatingQuiz, setCreatingQuiz] = useState(false);
+
   function addQuizQuestion() {
     const newQuestion: QuizQuestionModel = {
       question: "Nova Questão",
@@ -217,13 +219,26 @@ export default function MakeQuiz(props: MakeQuizProps) {
   }
 
   async function handleCreateQuiz(quizData: QuizModel){
+    setCreatingQuiz(true);
     try {
       await createQuiz(quizData)
         .then((response) => {
-          toast.success("Usuário Adicionado com Sucesso !");
+          toast.success("Quiz Adicionado com Sucesso !");
+          resetQuiz();
         })
         .catch((error) => {});
     } catch {}
+    finally{
+      setCreatingQuiz(false);
+    }
+  }
+
+  function resetQuiz(){
+    setQuizTitle("");
+    setQuizDescription("");
+    setQuizQuestions([]);
+
+    localStorage.removeItem("creating-quiz-data");
   }
 
   return (
@@ -371,7 +386,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
         <button
           type="submit"
-          className="rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500"
+          disabled={creatingQuiz}
+          className={`rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500 ${creatingQuiz ? "animate-pulse bg-opacity-80 cursor-not-allowed" : ""}`}
         >
           Concluir Quiz
         </button>
