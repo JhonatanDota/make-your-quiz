@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Menu from "./components/Menu";
 import Home from "./pages/Home";
 import MakeQuiz from "./pages/MakeQuiz";
+import QuizList from "./pages/QuizList";
 
 export default function AppRoutes() {
   const [showMenu, setShowMenu] = useState(true);
@@ -15,6 +16,7 @@ export default function AppRoutes() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/make-yours" element={<MakeQuiz isMenuOpen={showMenu} />} />
+            <Route path="/list-quizes" element={<QuizList />} />
           </Routes>
         </div>
       </div>

@@ -27,15 +27,26 @@ export default function Menu(props: MenuProps) {
             <ul className="flex flex-col items-center gap-8 md:gap-16 text-white text-sm">
               <li>
                 <NavLink to="/make-yours">
-                  <button className="text-green-500 text-2xl md:text-5xl" title="Faça o seu">
+                  <button
+                    className="text-green-500 text-2xl md:text-5xl"
+                    title="Faça o seu"
+                  >
                     <BsFillPlusSquareFill />
                   </button>
                 </NavLink>
               </li>
-              <button className="text-purple-400 text-2xl md:text-5xl" title="Faça o seu">
-                <BsFillQuestionSquareFill />
-              </button>
-              <button className="text-blue-400 text-2xl md:text-5xl" title="Faça o seu">
+              <NavLink to="/list-quizes">
+                <button
+                  className="text-purple-400 text-2xl md:text-5xl"
+                  title="Faça o seu"
+                >
+                  <BsFillQuestionSquareFill />
+                </button>
+              </NavLink>
+              <button
+                className="text-blue-400 text-2xl md:text-5xl"
+                title="Faça o seu"
+              >
                 <BsFillInfoSquareFill />
               </button>
             </ul>
