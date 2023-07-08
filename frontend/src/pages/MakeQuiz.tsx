@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
 import { BsFillTrash3Fill, BsFillPlusSquareFill } from "react-icons/bs";
-import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
+import ConfirmationModal from "../components/ConfirmationModal";
 import QuizModel from "../models/QuizModel";
 import { Toaster, toast } from "react-hot-toast";
 import { createQuiz } from "../requests/quiz";
@@ -18,7 +18,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     ? JSON.parse(localStorageData)
     : [];
 
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
+  const [showQuestionDeleteConfirmationModal, setShowQuestionDeleteConfirmationModal] =
     useState(false);
   const [quizQuestionIndexToDelete, setQuizQuestionIndexToDelete] =
     useState<number>(-1);
@@ -59,7 +59,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
   function removeQuizQuestionCheck(index: number) {
     setQuizQuestionIndexToDelete(index);
-    setShowDeleteConfirmationModal(true);
+    setShowQuestionDeleteConfirmationModal(true);
   }
 
   function removeQuizQuestion(index: number) {
@@ -369,9 +369,9 @@ export default function MakeQuiz(props: MakeQuizProps) {
         ))}
       </div>
 
-      <DeleteConfirmationModal
-        isOpen={showDeleteConfirmationModal}
-        setIsOpen={setShowDeleteConfirmationModal}
+      <ConfirmationModal
+        isOpen={showQuestionDeleteConfirmationModal}
+        setIsOpen={setShowQuestionDeleteConfirmationModal}
         message={"Excluir a questão ?"}
         onConfirmation={() => removeQuizQuestion(quizQuestionIndexToDelete)}
       />
