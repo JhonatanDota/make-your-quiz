@@ -375,16 +375,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
         message={"Excluir a questão ?"}
         onConfirmation={() => removeQuizQuestion(quizQuestionIndexToDelete)}
       />
-      <div className="flex justify-center gap-5">
-        <button
-          type="submit"
-          disabled={creatingQuiz}
-          className={`rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500 ${
-            creatingQuiz ? "animate-pulse bg-opacity-80 cursor-not-allowed" : ""
-          }`}
-        >
-          Concluir Quiz
-        </button>
+      <div className="flex flex-col gap-5 md:m-auto">
         <button
           type="button"
           className="rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-purple-600"
@@ -392,6 +383,27 @@ export default function MakeQuiz(props: MakeQuizProps) {
         >
           Adicionar Questão
         </button>
+
+        <div className="flex justify-between md:gap-16">
+          <button
+            type="button"
+            className="rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-red-500"
+          >
+            Excluir Quiz
+          </button>
+
+          <button
+            type="submit"
+            disabled={creatingQuiz}
+            className={`rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500 ${
+              creatingQuiz
+                ? "animate-pulse bg-opacity-80 cursor-not-allowed"
+                : ""
+            }`}
+          >
+            Concluir Quiz
+          </button>
+        </div>
       </div>
       <Toaster position="top-right" />
     </form>
