@@ -18,8 +18,14 @@ export default function MakeQuiz(props: MakeQuizProps) {
     ? JSON.parse(localStorageData)
     : [];
 
-  const [showQuestionDeleteConfirmationModal, setShowQuestionDeleteConfirmationModal] =
+  const [
+    showQuestionDeleteConfirmationModal,
+    setShowQuestionDeleteConfirmationModal,
+  ] = useState(false);
+
+  const [showQuizRemoveConfirmationModal, setShowQuizRemoveConfirmationModal] =
     useState(false);
+
   const [quizQuestionIndexToDelete, setQuizQuestionIndexToDelete] =
     useState<number>(-1);
 
@@ -369,12 +375,6 @@ export default function MakeQuiz(props: MakeQuizProps) {
         ))}
       </div>
 
-      <ConfirmationModal
-        isOpen={showQuestionDeleteConfirmationModal}
-        setIsOpen={setShowQuestionDeleteConfirmationModal}
-        message={"Excluir a questão ?"}
-        onConfirmation={() => removeQuizQuestion(quizQuestionIndexToDelete)}
-      />
       <div className="flex flex-col gap-5 md:m-auto">
         <button
           type="button"
@@ -386,6 +386,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
         <div className="flex justify-between md:gap-16">
           <button
+            onClick={() => setShowQuizRemoveConfirmationModal(true)}
             type="button"
             className="rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-red-500"
           >
@@ -406,6 +407,19 @@ export default function MakeQuiz(props: MakeQuizProps) {
         </div>
       </div>
       <Toaster position="top-right" />
+      <ConfirmationModal
+        isOpen={showQuestionDeleteConfirmationModal}
+        setIsOpen={setShowQuestionDeleteConfirmationModal}
+        message={"Excluir a questão ?"}
+        onConfirmation={() => removeQuizQuestion(quizQuestionIndexToDelete)}
+      />
+
+      <ConfirmationModal
+        isOpen={showQuizRemoveConfirmationModal}
+        setIsOpen={setShowQuizRemoveConfirmationModal}
+        message={"Excluir quiz ?"}
+        onConfirmation={() => resetQuiz()}
+      />
     </form>
   );
 }

@@ -23,7 +23,7 @@ export default function DeleteConfirmationModal(
             <div className="flex justify-around gap-4 md:gap-8 text-lg">
               <button
                 onClick={() => props.setIsOpen(false)}
-                className="text-sm md:text-lg bg-green-400 p-3 uppercase"
+                className="text-sm md:text-lg bg-green-500 p-3 uppercase"
               >
                 Cancelar
               </button>
@@ -31,7 +31,7 @@ export default function DeleteConfirmationModal(
                 onClick={handleConfirmation}
                 className="text-sm md:text-lg bg-red-400 p-3 uppercase"
               >
-                deletar
+                Excluir
               </button>
             </div>
           </div>
