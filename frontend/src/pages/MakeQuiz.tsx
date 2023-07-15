@@ -29,8 +29,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const [quizQuestionIndexToDelete, setQuizQuestionIndexToDelete] =
     useState<number>(-1);
 
-  const [quizTitle, setQuizTitle] = useState("");
-  const [quizDescription, setQuizDescription] = useState("");
+  const [quizTitle, setQuizTitle] = useState<string>("");
+  const [quizDescription, setQuizDescription] = useState<string>("");
   const [quizQuestions, setQuizQuestions] =
     useState<QuizQuestionModel[]>(initialQuizQuestions);
 

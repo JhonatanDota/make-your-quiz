@@ -31,6 +31,9 @@ class QuizRequest extends FormRequest
         $validator->after(function ($validator) {
             $questions = $this->input('questions');
 
+            if(is_null($questions))
+                return;
+
             foreach ($questions as $question) {
                 $correctCount = 0;
 

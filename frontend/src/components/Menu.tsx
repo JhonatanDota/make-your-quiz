@@ -6,6 +6,7 @@ import {
   BsFillPlusSquareFill,
   BsFillQuestionSquareFill,
   BsFillInfoSquareFill,
+  BsFillPersonVcardFill,
 } from "react-icons/bs";
 
 interface MenuProps {
@@ -25,6 +26,16 @@ export default function Menu(props: MenuProps) {
           </div>
           <div className="h-2/3">
             <ul className="flex flex-col items-center gap-8 md:gap-16 text-white text-sm">
+            <li>
+                <NavLink to="/user">
+                  <button
+                    className="text-yellow-400 text-2xl md:text-5xl"
+                    title="Faça o seu"
+                  >
+                    <BsFillPersonVcardFill />
+                  </button>
+                </NavLink>
+              </li>
               <li>
                 <NavLink to="/make-yours">
                   <button
