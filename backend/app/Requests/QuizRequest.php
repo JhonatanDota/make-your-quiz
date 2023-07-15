@@ -12,6 +12,8 @@ class QuizRequest extends FormRequest
     public function rules()
     {
         return [
+            'user_id' => ['required', 'exists:users,id'],
+
             'title' => ['required', 'min:3', 'max:75'],
             'description' => ['required', 'min:3', 'max:75'],
 
@@ -39,7 +41,7 @@ class QuizRequest extends FormRequest
                 }
 
                 if ($correctCount !== 1) {
-                    $validator->errors()->add('questions', 'Cada pergunta deve ter uma única alternativa correta.');
+                    $validator->errors()->add('questions', 'Each question must have a unique correct alternative.');
                 }
             }
         });
@@ -60,27 +62,29 @@ class QuizRequest extends FormRequest
     public function messages()
     {
         return [
-            'title.required' => 'O campo Título é obrigatório.',
-            'title.min' => 'O campo Título deve ter pelo menos 3 caracteres.',
+            'user_id.exists' => 'The user does not exist.',
 
-            'description.required' => 'O campo Descrição é obrigatório.',
-            'description.min' => 'O campo Descrição deve ter pelo menos 3 caracteres.',
-
-            'questions' => 'Cada pergunta deve ter uma única alternativa correta.',
-            'questions.required' => 'O campo Questions é obrigatório.',
-            'questions.array' => 'O campo Questions deve ser um array.',
-
-            'questions.*.question.required' => 'O campo Question é obrigatório para todas as perguntas.',
-            'questions.*.question.string' => 'O campo Question deve ser uma string para todas as perguntas.',
-
-            'questions.*.alternatives.required' => 'O campo Alternatives é obrigatório para todas as perguntas.',
-            'questions.*.alternatives.array' => 'O campo Alternatives deve ser um array para todas as perguntas.',
-
-            'questions.*.alternatives.*.question.required' => 'O campo Question é obrigatório para todas as alternativas.',
-            'questions.*.alternatives.*.question.string' => 'O campo Question deve ser uma string para todas as alternativas.',
+            'title.required' => 'The Title field is required.',
+            'title.min' => 'The Title field must be at least 3 characters long.',
             
-            'questions.*.alternatives.*.isCorrect.required' => 'O campo isCorrect é obrigatório para todas as alternativas.',
-            'questions.*.alternatives.*.isCorrect.boolean' => 'O campo isCorrect deve ser um booleano para todas as alternativas.',
+            'description.required' => 'The Description field is required.',
+            'description.min' => 'The Description field must be at least 3 characters long.',
+            
+            'questions' => 'Each question must have a single correct alternative.',
+            'questions.required' => 'The Questions field is required.',
+            'questions.array' => 'The Questions field must be an array.',
+            
+            'questions.*.question.required' => 'The Question field is required for all questions.',
+            'questions.*.question.string' => 'The Question field must be a string for all questions.',
+            
+            'questions.*.alternatives.required' => 'The Alternatives field is required for all questions.',
+            'questions.*.alternatives.array' => 'The Alternatives field must be an array for all questions.',
+            
+            'questions.*.alternatives.*.question.required' => 'The Question field is required for all alternatives.',
+            'questions.*.alternatives.*.question.string' => 'The Question field must be a string for all alternatives.',
+            
+            'questions.*.alternatives.*.isCorrect.required' => 'The isCorrect field is required for all alternatives.',
+            'questions.*.alternatives.*.isCorrect.boolean' => 'The isCorrect field must be a boolean for all alternatives.',
         ];
     }
 }

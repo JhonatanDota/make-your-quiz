@@ -17,12 +17,13 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('username', 'password');
 
+        if(!isset($credentials['username']) || !isset($credentials['password']))
+            return response()->json(['error' => 'Username and password are necessary.'], 400);
+        
         if (Auth::attempt($credentials)) {
             $token = auth()->attempt($credentials);
-
-            $user = Auth::user();
 
             return response()->json([
                 'user' => Auth::user(),
@@ -30,7 +31,7 @@ class AuthController extends Controller
             ]);
         }
 
-        return response()->json(['errors' => 'Unauthorized'], 401);
+        return response()->json(['error' => 'Unauthorized'], 401);
     }
 
     public function register(UserRequest $request)

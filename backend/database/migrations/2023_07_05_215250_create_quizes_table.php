@@ -15,10 +15,11 @@ class CreateQuizesTable extends Migration
     {
         Schema::create('quizes', function (Blueprint $table) {
             $table->id();
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
             $table->text('description');
-            $table->integer('rating')->default(0);
-            $table->integer('finished_count')->default(0);
+            $table->boolean('is_active');
             $table->timestamps();
         });
     }

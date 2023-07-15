@@ -17,12 +17,8 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string>
      */
     protected $fillable = [
-        'first_name',
-        'last_name',
-        'email',
-        'user_type',
+        'username',
         'password',
-        'postal_code'
     ];
 
     /**
@@ -34,14 +30,6 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
-    ];
 
     public function getJWTIdentifier()
     {
@@ -51,21 +39,5 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
-    }
-
-    /**
-     * Helpers
-    */
-
-    public function isAdmin(){
-        return $this->user_type == 'ADMIN';
-    }
-
-    /**
-     * Relationship gatters
-    */
-
-    public function company(){
-        return $this->hasOne(Company::class);
     }
 }

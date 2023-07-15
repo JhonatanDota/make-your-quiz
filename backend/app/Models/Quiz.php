@@ -15,10 +15,10 @@ class Quiz extends Model
      * The attributes that are mass assignable.
      */
     protected $fillable = [
+        'user_id',
         'title',
         'description',
-        'rating',
-        'finished_count'
+        'is_active',
     ];
 
     /**
@@ -31,10 +31,9 @@ class Quiz extends Model
      * The attributes that should be casted to native types
      */
     protected $casts = [
+        'user_id' => 'integer',
         'title' => 'string',
         'description' => 'string',
-        'rating' => 'integer',
-        'finished_count' => 'integer',
     ];
 
 
