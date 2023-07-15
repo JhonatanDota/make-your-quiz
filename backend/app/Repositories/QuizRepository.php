@@ -9,9 +9,9 @@ use App\Interfaces\QuizRepositoryInterface;
 
 class QuizRepository implements QuizRepositoryInterface
 {
-    public function getAllQuizes(int $quantityByPage = 8) 
+    public function getAllQuizes(int $quantityByPage = 5) 
     {
-        return Quiz::paginate($quantityByPage);
+        return Quiz::with('questions')->paginate($quantityByPage);
     }
 
     public function getQuizById(int $id) 
