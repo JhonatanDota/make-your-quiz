@@ -23,6 +23,13 @@ export function getUser(): UserModel | null {
   return null;
 }
 
+export function logout(){
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  
+  window.location.replace("/user")
+}
+
 // export function authCheck(component: any) {
 //   return getToken() ? component : <Navigate to="/" />;
 // }

@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { UserContext } from "../contexts/UserContext";
+import UserLoggedView from "../components/UserLoggedView";
 
 export default function User() {
   const { user } = useContext(UserContext);
@@ -8,7 +9,7 @@ export default function User() {
   return (
     <div className="mt-32 flex flex-col gap-y-4 md:gap-y-8 text-center">
       {user ? (
-        <h1>asd</h1>
+        <UserLoggedView user={user} />
       ) : (
         <div className="w-2/3 m-auto flex flex-col gap-12">
           <NavLink to="/login">
