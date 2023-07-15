@@ -12,8 +12,6 @@ class QuizRequest extends FormRequest
     public function rules()
     {
         return [
-            'user_id' => ['required', 'exists:users,id'],
-
             'title' => ['required', 'min:3', 'max:75'],
             'description' => ['required', 'min:3', 'max:75'],
 
@@ -65,8 +63,6 @@ class QuizRequest extends FormRequest
     public function messages()
     {
         return [
-            'user_id.exists' => 'The user does not exist.',
-
             'title.required' => 'The Title field is required.',
             'title.min' => 'The Title field must be at least 3 characters long.',
             

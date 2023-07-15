@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
 import { BsFillTrash3Fill, BsFillPlusSquareFill } from "react-icons/bs";
@@ -6,12 +6,15 @@ import ConfirmationModal from "../components/ConfirmationModal";
 import QuizModel from "../models/QuizModel";
 import { Toaster, toast } from "react-hot-toast";
 import { createQuiz } from "../requests/quiz";
+import { UserContext } from "../contexts/UserContext";
 
 interface MakeQuizProps {
   isMenuOpen: boolean;
 }
 
 export default function MakeQuiz(props: MakeQuizProps) {
+  const { user } = useContext(UserContext);
+
   const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
   const localStorageData = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
   const initialQuizQuestions = localStorageData
@@ -152,6 +155,11 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
     if (!quizDescription) {
       toast.error("Digite uma descrição para o Quiz.");
+      return false;
+    }
+
+    if(!user){
+      toast.error("É necessário estar logado para criar um Quiz.");
       return false;
     }
 

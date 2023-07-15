@@ -27,14 +27,15 @@ class QuizRepository implements QuizRepositoryInterface
     public function createQuiz(array $data) 
     {
         $quiz = Quiz::create([
-            'title' => $data["title"],
-            'description' => $data["description"],
+            'user_id' => $data['user_id'],
+            'title' => $data['title'],
+            'description' => $data['description'],
         ]);
 
         foreach ($data['questions'] as $question) {
             $quizQuestion = QuizQuestion::create([
                 'quiz_id' => $quiz->id,
-                'question' => $question["question"]
+                'question' => $question['question']
             ]);
 
             foreach ($question['alternatives'] as $alternative) {
