@@ -14,6 +14,11 @@ class QuizRepository implements QuizRepositoryInterface
         return Quiz::with('questions')->paginate($quantityByPage);
     }
 
+    public function getMyQuizes(int $userId, int $quantityByPage = 5)
+    {
+        return Quiz::with('questions')->where('user_id', $userId)->paginate($quantityByPage);
+    }
+
     public function getQuizById(int $id) 
     {
         return Quiz::findOrFail($id);

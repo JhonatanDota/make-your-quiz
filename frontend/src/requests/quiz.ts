@@ -4,9 +4,17 @@ import { HEADER } from "../config";
 import QuizModel from "../models/QuizModel";
 
 const QUIZ_URL = `${API_BASE_URL}quizes/`;
+const MY_QUIZES_URL = `${API_BASE_URL}my-quizes/`;
 
 export async function getAllQuizes() {
   const response = await axios.get(QUIZ_URL, {
+    headers: HEADER,
+  });
+  return response;
+}
+
+export async function getMyQuizes(){
+  const response = await axios.get(MY_QUIZES_URL, {
     headers: HEADER,
   });
   return response;

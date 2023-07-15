@@ -19,6 +19,12 @@ class QuizController extends Controller
         return response()->json($this->quizRepository->getAllQuizes(), 200);
     }
 
+    public function getMyQuizes()
+    {
+        $user = Auth::user();
+        return response()->json($this->quizRepository->getMyQuizes($user->id), 200);
+    }
+
     public function getQuizById(int $id)
     {
         return response()->json($this->quizRepository->getQuizById($id), 200);
