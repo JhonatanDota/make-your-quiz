@@ -14,7 +14,12 @@ export default function Login() {
     try {
       await login(username, password)
         .then((response) => {
-          console.log(response);
+          const data = response.data;
+
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("user", JSON.stringify(data.user));
+
+          window.location.replace("/user")
         })
         .catch(() => {
           toast.error("Login inválido.");
