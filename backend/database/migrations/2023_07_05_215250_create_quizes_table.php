@@ -19,6 +19,7 @@ class CreateQuizesTable extends Migration
             $table->foreign('user_id')->references('id')->on('users');
             $table->string('title');
             $table->text('description');
+            $table->integer('difficult');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
         });

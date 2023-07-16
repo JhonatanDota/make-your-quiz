@@ -6,4 +6,6 @@ export default interface QuizModel {
   title: string;
   description: string;
   questions: QuizQuestionModel[];
+  difficult: number;
+  isActive: boolean;
 }

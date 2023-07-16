@@ -21,6 +21,8 @@ class QuizRequest extends FormRequest
             'questions.*.alternatives' => ['required', 'array'],
             'questions.*.alternatives.*.question' => ['required', 'string'],
             'questions.*.alternatives.*.isCorrect' => ['required', 'boolean'],
+
+            'difficult' => ['required', 'integer', 'min:1', 'max:5'],
         ];
     }
 

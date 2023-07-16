@@ -31,11 +31,7 @@ class QuizRepository implements QuizRepositoryInterface
 
     public function createQuiz(array $data) 
     {
-        $quiz = Quiz::create([
-            'user_id' => $data['user_id'],
-            'title' => $data['title'],
-            'description' => $data['description'],
-        ]);
+        $quiz = Quiz::create($data);
 
         foreach ($data['questions'] as $question) {
             $quizQuestion = QuizQuestion::create([

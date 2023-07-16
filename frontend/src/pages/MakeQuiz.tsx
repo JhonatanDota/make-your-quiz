@@ -1,12 +1,18 @@
 import { useState, useEffect, useContext } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
-import { BsFillTrash3Fill, BsFillPlusSquareFill } from "react-icons/bs";
+import {
+  BsFillTrash3Fill,
+  BsFillPlusSquareFill,
+  BsMortarboardFill,
+  BsMortarboard,
+} from "react-icons/bs";
 import ConfirmationModal from "../components/ConfirmationModal";
 import QuizModel from "../models/QuizModel";
 import { Toaster, toast } from "react-hot-toast";
 import { createQuiz } from "../requests/quiz";
 import { UserContext } from "../contexts/UserContext";
+import Ratting from "../components/Ratting";
 
 interface MakeQuizProps {
   isMenuOpen: boolean;
@@ -14,6 +20,7 @@ interface MakeQuizProps {
 
 export default function MakeQuiz(props: MakeQuizProps) {
   const { user } = useContext(UserContext);
+  const MAX_DIFFICULT_RATE = 5
 
   const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
   const localStorageData = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
@@ -36,6 +43,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const [quizDescription, setQuizDescription] = useState<string>("");
   const [quizQuestions, setQuizQuestions] =
     useState<QuizQuestionModel[]>(initialQuizQuestions);
+
+  const [difficult, setDifficult] = useState<number>(1);
 
   const [creatingQuiz, setCreatingQuiz] = useState(false);
 
@@ -158,7 +167,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
       return false;
     }
 
-    if(!user){
+    if (!user) {
       toast.error("É necessário estar logado para criar um Quiz.");
       return false;
     }
@@ -227,6 +236,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
       title: quizTitle,
       description: quizDescription,
       questions: quizQuestions,
+      difficult: difficult,
+      isActive: true,
     };
 
     handleCreateQuiz(quizData);
@@ -281,6 +292,19 @@ export default function MakeQuiz(props: MakeQuizProps) {
           onChange={(event) => {
             setQuizDescription(event.target.value);
           }}
+        />
+      </div>
+
+      <div className="flex flex-col gap-2 md:gap-6 md:w-1/2 md:m-auto">
+        <label className="text-lg md:text-4xl font-bold ">
+          Nível de Dificuldade
+        </label>
+        <Ratting
+          max={MAX_DIFFICULT_RATE}
+          icon={<BsMortarboard />}
+          fillIcon={<BsMortarboardFill className="text-red-500" />}
+          rating={difficult}
+          setRatting={setDifficult}
         />
       </div>
 
