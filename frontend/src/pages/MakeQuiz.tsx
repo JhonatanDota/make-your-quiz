@@ -13,6 +13,7 @@ import { Toaster, toast } from "react-hot-toast";
 import { createQuiz } from "../requests/quiz";
 import { UserContext } from "../contexts/UserContext";
 import Ratting from "../components/Ratting";
+import Tags from "../components/Tags";
 
 interface MakeQuizProps {
   isMenuOpen: boolean;
@@ -20,7 +21,8 @@ interface MakeQuizProps {
 
 export default function MakeQuiz(props: MakeQuizProps) {
   const { user } = useContext(UserContext);
-  const MAX_DIFFICULT_RATE = 5
+  const MAX_DIFFICULT_RATE = 5;
+  const MAX_TAGS = 5;
 
   const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
   const localStorageData = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
@@ -45,6 +47,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
     useState<QuizQuestionModel[]>(initialQuizQuestions);
 
   const [difficult, setDifficult] = useState<number>(1);
+
+  const [tags, setTags] = useState<string[]>([]);
 
   const [creatingQuiz, setCreatingQuiz] = useState(false);
 
@@ -306,6 +310,11 @@ export default function MakeQuiz(props: MakeQuizProps) {
           rating={difficult}
           setRatting={setDifficult}
         />
+      </div>
+
+      <div className="flex flex-col gap-2 md:gap-6 md:w-1/2 md:m-auto">
+        <label className="text-lg md:text-4xl font-bold ">Tags</label>
+        <Tags max={MAX_TAGS} tags={tags} setTags={setTags}/>
       </div>
 
       <div className="flex flex-col gap-16 md:w-2/3 mt-6 md:m-auto md:mt-10">

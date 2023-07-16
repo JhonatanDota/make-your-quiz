@@ -12,7 +12,7 @@ export default function Ratting(props: RattingProps) {
 
   return (
     <div className="flex justify-center gap-2">
-      {[...Array(max)].map((_, index) => {
+      {[...Array(max)].map((_, index: number) => {
         index += 1;
         return (
           <button
