@@ -46,9 +46,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const [quizQuestions, setQuizQuestions] =
     useState<QuizQuestionModel[]>(initialQuizQuestions);
 
-  const [difficult, setDifficult] = useState<number>(1);
-
-  const [tags, setTags] = useState<string[]>([]);
+  const [quizDifficult, setQuizDifficult] = useState<number>(1);
+  const [quizTags, setQuizTags] = useState<string[]>([]);
 
   const [creatingQuiz, setCreatingQuiz] = useState(false);
 
@@ -240,7 +239,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
       title: quizTitle,
       description: quizDescription,
       questions: quizQuestions,
-      difficult: difficult,
+      difficult: quizDifficult,
       isActive: true,
     };
 
@@ -265,6 +264,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
   function resetQuiz() {
     setQuizTitle("");
     setQuizDescription("");
+    setQuizTags([]);
     setQuizQuestions([]);
 
     localStorage.removeItem("creating-quiz-data");
@@ -300,6 +300,11 @@ export default function MakeQuiz(props: MakeQuizProps) {
       </div>
 
       <div className="flex flex-col gap-2 md:gap-6 md:w-1/2 md:m-auto">
+        <label className="text-lg md:text-4xl font-bold ">Tags</label>
+        <Tags max={MAX_TAGS} tags={quizTags} setTags={setQuizTags} />
+      </div>
+
+      <div className="flex flex-col gap-2 md:gap-6 md:w-1/2 md:m-auto">
         <label className="text-lg md:text-4xl font-bold ">
           Nível de Dificuldade
         </label>
@@ -307,14 +312,9 @@ export default function MakeQuiz(props: MakeQuizProps) {
           max={MAX_DIFFICULT_RATE}
           icon={<BsMortarboard />}
           fillIcon={<BsMortarboardFill className="text-red-500" />}
-          rating={difficult}
-          setRatting={setDifficult}
+          rating={quizDifficult}
+          setRatting={setQuizDifficult}
         />
-      </div>
-
-      <div className="flex flex-col gap-2 md:gap-6 md:w-1/2 md:m-auto">
-        <label className="text-lg md:text-4xl font-bold ">Tags</label>
-        <Tags max={MAX_TAGS} tags={tags} setTags={setTags}/>
       </div>
 
       <div className="flex flex-col gap-16 md:w-2/3 mt-6 md:m-auto md:mt-10">

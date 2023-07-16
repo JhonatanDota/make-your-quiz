@@ -44,10 +44,10 @@ export default function Tags(props: TagsProps) {
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <div className="flex flex-wrap gap-2">
+    <div className="flex flex-col gap-3 md:gap-6">
+      <div className="flex flex-wrap justify-center gap-2 md:gap-6">
         {tags.map((tag: string, index: number) => (
-          <div className="max-w-full flex justify-between gap-3 md:gap-8 p-3 md:p-6 border-2 rounded-lg">
+          <div className="max-w-full flex justify-between gap-3 md:gap-8 p-3 md:p-6 border-2 border-blue-400 rounded-lg">
             <p className="max-w-[80%] overflow-hidden text-ellipsis text-sm md:text-2xl font-bold">
               {tag}
             </p>
