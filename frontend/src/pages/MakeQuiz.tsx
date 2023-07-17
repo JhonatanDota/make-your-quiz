@@ -41,15 +41,19 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const [quizQuestionIndexToDelete, setQuizQuestionIndexToDelete] =
     useState<number>(-1);
 
-  const [quizTitle, setQuizTitle] = useState<string>("");
-  const [quizDescription, setQuizDescription] = useState<string>("");
-  const [quizQuestions, setQuizQuestions] =
-    useState<QuizQuestionModel[]>(initialQuizQuestions);
-
-  const [quizDifficult, setQuizDifficult] = useState<number>(1);
-  const [quizTags, setQuizTags] = useState<string[]>([]);
+  const [quizData, setQuizData] = useState({
+    title: "",
+    description: "",
+    questions: initialQuizQuestions,
+    difficult: 1,
+    tags: [],
+  });
 
   const [creatingQuiz, setCreatingQuiz] = useState(false);
+
+  function handleQuizDataChange(key: string, value: any) {
+    setQuizData((prevData) => ({ ...prevData, [key]: value }));
+  }
 
   function addQuizQuestion() {
     const newQuestion: QuizQuestionModel = {
@@ -57,15 +61,18 @@ export default function MakeQuiz(props: MakeQuizProps) {
       alternatives: [],
     };
 
-    setQuizQuestions([...quizQuestions, newQuestion]);
+    setQuizData((prevData) => ({
+      ...prevData,
+      questions: [...prevData.questions, newQuestion],
+    }));
   }
 
   useEffect(() => {
     localStorage.setItem(
       LOCAL_STORAGE_ITEM_NAME,
-      JSON.stringify(quizQuestions)
+      JSON.stringify(quizData.questions)
     );
-  }, [quizQuestions]);
+  }, [quizData.questions]);
 
   function handleQuizQuestionTitleChange(
     event: React.ChangeEvent<HTMLInputElement>,
@@ -73,7 +80,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
   ) {
     const newQuizQuestionTitle = event.target.value;
     updateQuizQuestion(quizQuestionIndex, {
-      ...quizQuestions[quizQuestionIndex],
+      ...quizData.questions[quizQuestionIndex],
       question: newQuizQuestionTitle,
     });
   }
@@ -84,21 +91,23 @@ export default function MakeQuiz(props: MakeQuizProps) {
   }
 
   function removeQuizQuestion(index: number) {
-    const updatedQuestions = quizQuestions.filter((_, i) => i !== index);
-    setQuizQuestions(updatedQuestions);
+    const updatedQuestions = quizData.questions.filter(
+      (_: QuizQuestionModel, i: number) => i !== index
+    );
+    setQuizData((prevData) => ({ ...prevData, questions: updatedQuestions }));
   }
 
   function updateQuizQuestion(
     index: number,
     updatedQuestion: QuizQuestionModel
   ) {
-    const updatedQuestions = [...quizQuestions];
+    const updatedQuestions = [...quizData.questions];
     updatedQuestions[index] = updatedQuestion;
-    setQuizQuestions(updatedQuestions);
+    setQuizData((prevData) => ({ ...prevData, questions: updatedQuestions }));
   }
 
   function addQuizQuestionAlternative(quizQuestionIndex: number) {
-    const updatedQuestions = [...quizQuestions];
+    const updatedQuestions = [...quizData.questions];
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
     const newAlternative: QuizQuestionAlternative = {
@@ -118,7 +127,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
   ) {
     const newAlternativeText = event.target.value;
 
-    const updatedQuestions = [...quizQuestions];
+    const updatedQuestions = [...quizData.questions];
     const quizQuestion = updatedQuestions[quizQuestionIndex];
     quizQuestion.alternatives[quizQuestionAlternativeIndex].question =
       newAlternativeText;
@@ -130,7 +139,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     quizQuestionIndex: number,
     quizQuestionAlternativeIndex: number
   ) {
-    const updatedQuestions = [...quizQuestions];
+    const updatedQuestions = [...quizData.questions];
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
     const quizQuestionAlternatives = quizQuestion.alternatives;
@@ -147,11 +156,11 @@ export default function MakeQuiz(props: MakeQuizProps) {
     quizQuestionIndex: number,
     quizQuestionAlternativeIndex: number
   ) {
-    const updatedQuestions = [...quizQuestions];
+    const updatedQuestions = [...quizData.questions];
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
     const updatedAlternatives = quizQuestion.alternatives.filter(
-      (_, i) => i !== quizQuestionAlternativeIndex
+      (_: QuizQuestionModel, i: number) => i !== quizQuestionAlternativeIndex
     );
 
     quizQuestion.alternatives = updatedAlternatives;
@@ -160,12 +169,12 @@ export default function MakeQuiz(props: MakeQuizProps) {
   }
 
   function checkQuizBasicData(): boolean {
-    if (!quizTitle) {
+    if (!quizData.title) {
       toast.error("Digite um título para o Quiz.");
       return false;
     }
 
-    if (!quizDescription) {
+    if (!quizData.description) {
       toast.error("Digite uma descrição para o Quiz.");
       return false;
     }
@@ -179,23 +188,27 @@ export default function MakeQuiz(props: MakeQuizProps) {
   }
 
   function checkQuizQuestions(): boolean {
-    if (quizQuestions.length == 0) {
+    if (quizData.questions.length === 0) {
       toast.error("Adicione uma questão para o Quiz.");
       return false;
     }
 
-    for (let quizIndex = 0; quizIndex < quizQuestions.length; quizIndex++) {
-      let quizQuestion = quizQuestions[quizIndex];
+    for (
+      let quizIndex = 0;
+      quizIndex < quizData.questions.length;
+      quizIndex++
+    ) {
+      let quizQuestion = quizData.questions[quizIndex];
       let alternatives: QuizQuestionAlternative[] = quizQuestion.alternatives;
       let haveCorrectAlternative = false;
 
       if (!quizQuestion.question) {
-        toast.error(`A Questão ${quizIndex + 1} não possue pergunta.`);
+        toast.error(`A Questão ${quizIndex + 1} não possui pergunta.`);
         return false;
       }
 
-      if (alternatives.length == 0) {
-        toast.error(`A Questão ${quizIndex + 1} não possue alternativas.`);
+      if (alternatives.length === 0) {
+        toast.error(`A Questão ${quizIndex + 1} não possui alternativas.`);
         return false;
       }
 
@@ -218,7 +231,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
         if (alternative.isCorrect) haveCorrectAlternative = true;
       }
 
-      if (haveCorrectAlternative == false) {
+      if (haveCorrectAlternative === false) {
         toast.error(
           `Não existe Alternativa correta na Questão ${quizIndex + 1}.`
         );
@@ -232,24 +245,24 @@ export default function MakeQuiz(props: MakeQuizProps) {
   function doneQuiz(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
-    if (checkQuizBasicData() == false) return;
-    if (checkQuizQuestions() == false) return;
+    if (checkQuizBasicData() === false) return;
+    if (checkQuizQuestions() === false) return;
 
-    const quizData: QuizModel = {
-      title: quizTitle,
-      description: quizDescription,
-      questions: quizQuestions,
-      difficult: quizDifficult,
+    const quizDataToSend: QuizModel = {
+      title: quizData.title,
+      description: quizData.description,
+      questions: quizData.questions,
+      difficult: quizData.difficult,
       isActive: true,
     };
 
-    handleCreateQuiz(quizData);
+    handleCreateQuiz(quizDataToSend);
   }
 
-  async function handleCreateQuiz(quizData: QuizModel) {
+  async function handleCreateQuiz(quizDataToSend: QuizModel) {
     setCreatingQuiz(true);
     try {
-      await createQuiz(quizData)
+      await createQuiz(quizDataToSend)
         .then((response) => {
           toast.success("Quiz Adicionado com Sucesso !");
           resetQuiz();
@@ -262,12 +275,15 @@ export default function MakeQuiz(props: MakeQuizProps) {
   }
 
   function resetQuiz() {
-    setQuizTitle("");
-    setQuizDescription("");
-    setQuizTags([]);
-    setQuizQuestions([]);
+    setQuizData({
+      title: "",
+      description: "",
+      questions: [],
+      difficult: 1,
+      tags: [],
+    });
 
-    localStorage.removeItem("creating-quiz-data");
+    localStorage.removeItem(LOCAL_STORAGE_ITEM_NAME);
   }
 
   return (
@@ -281,9 +297,9 @@ export default function MakeQuiz(props: MakeQuizProps) {
         <input
           className="text-lg md:text-4xl p-2 md:p-6 bg-gray-950 border-4 md:border-8 rounded-md font-bold border-yellow-400"
           type="text"
-          value={quizTitle}
+          value={quizData.title}
           onChange={(event) => {
-            setQuizTitle(event.target.value);
+            handleQuizDataChange("title", event.target.value);
           }}
         />
       </div>
@@ -292,16 +308,20 @@ export default function MakeQuiz(props: MakeQuizProps) {
         <input
           className="text-lg md:text-4xl p-2 md:p-6 bg-gray-950 border-4 md:border-8 rounded-md font-bold border-yellow-400"
           type="text"
-          value={quizDescription}
+          value={quizData.description}
           onChange={(event) => {
-            setQuizDescription(event.target.value);
+            handleQuizDataChange("description", event.target.value);
           }}
         />
       </div>
 
       <div className="flex flex-col gap-2 md:gap-6 md:w-1/2 md:m-auto">
         <label className="text-lg md:text-4xl font-bold ">Tags</label>
-        <Tags max={MAX_TAGS} tags={quizTags} setTags={setQuizTags} />
+        <Tags
+          max={MAX_TAGS}
+          tags={quizData.tags}
+          setTags={(tags) => handleQuizDataChange("tags", tags)}
+        />
       </div>
 
       <div className="flex flex-col gap-2 md:gap-6 md:w-1/2 md:m-auto">
@@ -312,108 +332,115 @@ export default function MakeQuiz(props: MakeQuizProps) {
           max={MAX_DIFFICULT_RATE}
           icon={<BsMortarboard />}
           fillIcon={<BsMortarboardFill className="text-red-500" />}
-          rating={quizDifficult}
-          setRatting={setQuizDifficult}
+          rating={quizData.difficult}
+          setRatting={(rating) => handleQuizDataChange("difficult", rating)}
         />
       </div>
 
       <div className="flex flex-col gap-16 md:w-2/3 mt-6 md:m-auto md:mt-10">
-        {quizQuestions.map((quizQuestion, quizQuestionIndex) => (
-          <div
-            className={`flex flex-col gap-6 md:gap-10 rounded-md p-4 border-4 md:border-8 ${
-              quizQuestionIndex % 2 == 0
-                ? "border-yellow-400"
-                : "border-blue-100"
-            }`}
-            key={quizQuestionIndex}
-          >
-            <p className="text-lg mt-4 md:text-2xl uppercase font-bold">
-              Questao: {quizQuestionIndex + 1}
-            </p>
-
-            <div className="flex flex-col gap-4 md:w-2/3 md:m-auto">
-              <label className="text-lg md:text-2xl font-bold">Pergunta</label>
-              <input
-                className="text-lg md:text-2xl p-2 md:p-4 bg-gray-950 border-4 font-bold border-yellow-400"
-                type="text"
-                value={quizQuestion.question}
-                onChange={(event) =>
-                  handleQuizQuestionTitleChange(event, quizQuestionIndex)
-                }
-              />
-            </div>
-            <button
-              type="button"
-              className="flex items-center justify-center rounded-md text-md md:text-3xl md:w-1/4 md:m-auto p-2 md:p-4 font-bold bg-red-500"
-              onClick={() => removeQuizQuestionCheck(quizQuestionIndex)}
+        {quizData.questions.map(
+          (quizQuestion: QuizQuestionModel, quizQuestionIndex: number) => (
+            <div
+              className={`flex flex-col gap-6 md:gap-10 rounded-md p-4 border-4 md:border-8 ${
+                quizQuestionIndex % 2 === 0
+                  ? "border-yellow-400"
+                  : "border-blue-100"
+              }`}
+              key={quizQuestionIndex}
             >
-              <BsFillTrash3Fill />
-            </button>
+              <p className="text-lg mt-4 md:text-2xl uppercase font-bold">
+                Questao: {quizQuestionIndex + 1}
+              </p>
 
-            {quizQuestion.alternatives.map(
-              (alternative, quizQuestionAlternativeIndex) => (
-                <div
-                  className="flex flex-col gap-6"
-                  key={quizQuestionAlternativeIndex}
-                >
+              <div className="flex flex-col gap-4 md:w-2/3 md:m-auto">
+                <label className="text-lg md:text-2xl font-bold">
+                  Pergunta
+                </label>
+                <input
+                  className="text-lg md:text-2xl p-2 md:p-4 bg-gray-950 border-4 font-bold border-yellow-400"
+                  type="text"
+                  value={quizQuestion.question}
+                  onChange={(event) =>
+                    handleQuizQuestionTitleChange(event, quizQuestionIndex)
+                  }
+                />
+              </div>
+              <button
+                type="button"
+                className="flex items-center justify-center rounded-md text-md md:text-3xl md:w-1/4 md:m-auto p-2 md:p-4 font-bold bg-red-500"
+                onClick={() => removeQuizQuestionCheck(quizQuestionIndex)}
+              >
+                <BsFillTrash3Fill />
+              </button>
+
+              {quizQuestion.alternatives.map(
+                (
+                  alternative: QuizQuestionAlternative,
+                  quizQuestionAlternativeIndex: number
+                ) => (
                   <div
-                    className={`flex justify-around md:justify-center gap-x-4 items-center ${
-                      props.isMenuOpen
-                        ? "flex-col md:flex-row gap-y-3"
-                        : "flex-row"
-                    }`}
+                    className="flex flex-col gap-6"
+                    key={quizQuestionAlternativeIndex}
                   >
-                    <input
-                      className="p-1 md:p-3 text-sm md:text-lg lg:text-2xl bg-gray-950 border-2 font-bold border-yellow-400"
-                      type="text"
-                      value={alternative.question}
-                      onChange={(event) =>
-                        handleAlternativeTextChange(
-                          event,
-                          quizQuestionIndex,
-                          quizQuestionAlternativeIndex
-                        )
-                      }
-                    />
-                    <div className="flex items-center gap-3 md:gap-6">
+                    <div
+                      className={`flex justify-around md:justify-center gap-x-4 items-center ${
+                        props.isMenuOpen
+                          ? "flex-col md:flex-row gap-y-3"
+                          : "flex-row"
+                      }`}
+                    >
                       <input
-                        type="radio"
-                        className="appearance-none cursor-pointer w-4 md:w-8 h-4 md:h-8 rounded border-2 border-white checked:bg-green-500 checked:border-transparent"
-                        checked={alternative.isCorrect}
-                        onChange={() =>
-                          handleAlternativeIsCorrectChange(
+                        className="p-1 md:p-3 text-sm md:text-lg lg:text-2xl bg-gray-950 border-2 font-bold border-yellow-400"
+                        type="text"
+                        value={alternative.question}
+                        onChange={(event) =>
+                          handleAlternativeTextChange(
+                            event,
                             quizQuestionIndex,
                             quizQuestionAlternativeIndex
                           )
                         }
                       />
-                      <button
-                        type="button"
-                        className="flex justify-center text-md md:text-3xl text-red-400"
-                        onClick={() =>
-                          removeQuizQuestionAlternative(
-                            quizQuestionIndex,
-                            quizQuestionAlternativeIndex
-                          )
-                        }
-                      >
-                        <BsFillTrash3Fill />
-                      </button>
+                      <div className="flex items-center gap-3 md:gap-6">
+                        <input
+                          type="radio"
+                          className="appearance-none cursor-pointer w-4 md:w-8 h-4 md:h-8 rounded border-2 border-white checked:bg-green-500 checked:border-transparent"
+                          checked={alternative.isCorrect}
+                          onChange={() =>
+                            handleAlternativeIsCorrectChange(
+                              quizQuestionIndex,
+                              quizQuestionAlternativeIndex
+                            )
+                          }
+                        />
+                        <button
+                          type="button"
+                          className="flex justify-center text-md md:text-3xl text-red-400"
+                          onClick={() =>
+                            removeQuizQuestionAlternative(
+                              quizQuestionIndex,
+                              quizQuestionAlternativeIndex
+                            )
+                          }
+                        >
+                          <BsFillTrash3Fill />
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              )
-            )}
-            <button
-              type="button"
-              className="w-1/2 md:w-1/4 m-auto flex justify-center items-center text-md md:text-md lg:text-2xl gap-2 rounded-md bg-yellow-400 font-bold p-2 md:p-4 text-black"
-              onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
-            >
-              <BsFillPlusSquareFill />
-              Alternativa
-            </button>
-          </div>
-        ))}
+                )
+              )}
+              <button
+                type="button"
+                className="w-1/2 md:w-1/4 m-auto flex justify-center items-center text-md md:text-md lg:text-2xl gap-2 rounded-md bg-yellow-400 font-bold p-2 md:p-4 text-black"
+                onClick={() => addQuizQuestionAlternative(quizQuestionIndex)}
+              >
+                <BsFillPlusSquareFill />
+                Alternativa
+              </button>
+            </div>
+          )
+        )}
       </div>
 
       <div className="flex flex-col gap-5 md:m-auto">
