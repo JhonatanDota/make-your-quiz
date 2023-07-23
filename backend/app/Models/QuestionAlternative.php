@@ -22,7 +22,7 @@ class QuestionAlternative extends Model
      * The attributes to hide.
     */
 
-    protected $hidden = ['created_at', 'updated_at'];
+    protected $hidden = ['is_correct', 'created_at', 'updated_at'];
 
     /**
      * The attributes that should be casted to native types
