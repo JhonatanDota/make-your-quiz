@@ -18,6 +18,7 @@ class Quiz extends Model
         'user_id',
         'title',
         'description',
+        'tags',
         'difficult',
         'is_active',
     ];
@@ -35,6 +36,7 @@ class Quiz extends Model
         'user_id' => 'integer',
         'title' => 'string',
         'description' => 'string',
+        'tags' => 'json',
         'difficult' => 'integer',
         'is_active' => 'boolean',
     ];
