@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import QuizPreviewCard from "../components/QuizPreviewCard";
-import QuizModel from "../models/QuizModel";
+import { QuizModel } from "../models/QuizModel";
 import { getAllQuizes } from "../requests/quiz";
 
 export default function QuizList() {

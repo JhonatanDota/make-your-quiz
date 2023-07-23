@@ -8,7 +8,7 @@ import {
   BsMortarboard,
 } from "react-icons/bs";
 import ConfirmationModal from "../components/ConfirmationModal";
-import QuizModel from "../models/QuizModel";
+import { QuizModel, QUIZ_DEFAULT_DATA } from "../models/QuizModel";
 import { Toaster, toast } from "react-hot-toast";
 import { createQuiz } from "../requests/quiz";
 import { UserContext } from "../contexts/UserContext";
@@ -24,11 +24,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const MAX_DIFFICULT_RATE = 5;
   const MAX_TAGS = 5;
 
-  const LOCAL_STORAGE_ITEM_NAME = "creating-quiz-data";
-  const localStorageData = localStorage.getItem(LOCAL_STORAGE_ITEM_NAME);
-  const initialQuizQuestions = localStorageData
-    ? JSON.parse(localStorageData)
-    : [];
+  const LOCAL_STORAGE_ITEM_NAME = "quiz";
 
   const [
     showQuestionDeleteConfirmationModal,
@@ -41,15 +37,22 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const [quizQuestionIndexToDelete, setQuizQuestionIndexToDelete] =
     useState<number>(-1);
 
-  const [quizData, setQuizData] = useState({
-    title: "",
-    description: "",
-    questions: initialQuizQuestions,
-    difficult: 1,
-    tags: [],
-  });
+  const [quizData, setQuizData] = useState<QuizModel>(loadInitialQuizData());
 
   const [creatingQuiz, setCreatingQuiz] = useState(false);
+
+  function loadInitialQuizData(): QuizModel {
+    try {
+      const quizDataStr: string | null = localStorage.getItem(
+        LOCAL_STORAGE_ITEM_NAME
+      );
+
+      if (quizDataStr) return JSON.parse(quizDataStr);
+      else return QUIZ_DEFAULT_DATA;
+    } catch (error) {
+      return QUIZ_DEFAULT_DATA;
+    }
+  }
 
   function handleQuizDataChange(key: string, value: any) {
     setQuizData((prevData) => ({ ...prevData, [key]: value }));
@@ -68,11 +71,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
   }
 
   useEffect(() => {
-    localStorage.setItem(
-      LOCAL_STORAGE_ITEM_NAME,
-      JSON.stringify(quizData.questions)
-    );
-  }, [quizData.questions]);
+    localStorage.setItem(LOCAL_STORAGE_ITEM_NAME, JSON.stringify(quizData));
+  }, [quizData]);
 
   function handleQuizQuestionTitleChange(
     event: React.ChangeEvent<HTMLInputElement>,
@@ -160,7 +160,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
     const updatedAlternatives = quizQuestion.alternatives.filter(
-      (_: QuizQuestionModel, i: number) => i !== quizQuestionAlternativeIndex
+      (_: QuizQuestionAlternative, i: number) =>
+        i !== quizQuestionAlternativeIndex
     );
 
     quizQuestion.alternatives = updatedAlternatives;
@@ -248,15 +249,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     if (checkQuizBasicData() === false) return;
     if (checkQuizQuestions() === false) return;
 
-    const quizDataToSend: QuizModel = {
-      title: quizData.title,
-      description: quizData.description,
-      questions: quizData.questions,
-      difficult: quizData.difficult,
-      isActive: true,
-    };
-
-    handleCreateQuiz(quizDataToSend);
+    handleCreateQuiz(quizData);
   }
 
   async function handleCreateQuiz(quizDataToSend: QuizModel) {

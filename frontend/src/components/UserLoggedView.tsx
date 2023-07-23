@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import UserModel from "../models/UserModel";
 import { logout } from "../config";
 import { getMyQuizes } from "../requests/quiz";
-import QuizModel from "../models/QuizModel";
+import { QuizModel } from "../models/QuizModel";
 
 interface UserLoggedViewProps {
   user: UserModel;
