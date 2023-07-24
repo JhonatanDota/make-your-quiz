@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import QuizQuestionModel from "../models/QuizQuestionModel";
-import QuizQuestionAlternative from "../models/QuizQuestionAlternative";
+import QuizQuestionAlternativeModel from "../models/QuizQuestionAlternativeModel";
 import {
   BsFillTrash3Fill,
   BsFillPlusSquareFill,
@@ -110,7 +110,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     const updatedQuestions = [...quizData.questions];
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
-    const newAlternative: QuizQuestionAlternative = {
+    const newAlternative: QuizQuestionAlternativeModel = {
       question: "Nova Alternativa",
       isCorrect: false,
     };
@@ -160,7 +160,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
     const updatedAlternatives = quizQuestion.alternatives.filter(
-      (_: QuizQuestionAlternative, i: number) =>
+      (_: QuizQuestionAlternativeModel, i: number) =>
         i !== quizQuestionAlternativeIndex
     );
 
@@ -200,7 +200,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
       quizIndex++
     ) {
       let quizQuestion = quizData.questions[quizIndex];
-      let alternatives: QuizQuestionAlternative[] = quizQuestion.alternatives;
+      let alternatives: QuizQuestionAlternativeModel[] = quizQuestion.alternatives;
       let haveCorrectAlternative = false;
 
       if (!quizQuestion.question) {
@@ -218,7 +218,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
         alternativeIndex < alternatives.length;
         alternativeIndex++
       ) {
-        let alternative: QuizQuestionAlternative =
+        let alternative: QuizQuestionAlternativeModel =
           alternatives[alternativeIndex];
 
         if (!alternative.question) {
@@ -370,7 +370,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
               {quizQuestion.alternatives.map(
                 (
-                  alternative: QuizQuestionAlternative,
+                  alternative: QuizQuestionAlternativeModel,
                   quizQuestionAlternativeIndex: number
                 ) => (
                   <div

@@ -18,6 +18,7 @@ use App\Http\Controllers\QuizController;
 
 Route::post('login', [AuthController::class, 'login']);
 
+Route::get('quizes/{id}', [QuizController::class, 'getQuizById']);
 Route::get('quizes', [QuizController::class, 'getAllQuizes']);
 
 Route::group(['middleware' => 'jwt.auth'], function () {

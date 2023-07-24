@@ -1,4 +1,4 @@
-export default interface QuizQuestionAlternative {
+export default interface QuizQuestionAlternativeModel {
     id?: number,
     question: string,
     isCorrect: boolean

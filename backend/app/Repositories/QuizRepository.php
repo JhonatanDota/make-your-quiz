@@ -21,7 +21,7 @@ class QuizRepository implements QuizRepositoryInterface
 
     public function getQuizById(int $id) 
     {
-        return Quiz::findOrFail($id);
+        return Quiz::with('questions')->findOrFail($id);
     }
 
     public function deleteQuiz(int $id) 

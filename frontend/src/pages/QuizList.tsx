@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import QuizPreviewCard from "../components/QuizPreviewCard";
 import { QuizModel } from "../models/QuizModel";
 import { getAllQuizes } from "../requests/quiz";
@@ -24,7 +25,11 @@ export default function QuizList() {
   return (
     <div className="flex flex-col p-6 gap-y-6">
       {quizList.length || loadingQuizList ? (
-        quizList.map((quiz: QuizModel) => <QuizPreviewCard quiz={quiz} />)
+        quizList.map((quiz: QuizModel) => (
+          <NavLink to={`/answer-quiz/${quiz.id}/`}>
+            <QuizPreviewCard quiz={quiz} />
+          </NavLink>
+        ))
       ) : (
         <div className="mt-[50%]">
           <h1 className="text-3xl leading-10 text-white text-center font-bold">

@@ -6,6 +6,7 @@ import User from "./pages/User";
 import Login from "./pages/Login";
 import MakeQuiz from "./pages/MakeQuiz";
 import QuizList from "./pages/QuizList";
+import AnswerQuiz from "./pages/AnswerQuiz";
 
 export default function AppRoutes() {
   const [showMenu, setShowMenu] = useState(true);
@@ -23,6 +24,8 @@ export default function AppRoutes() {
 
             <Route path="/make-yours" element={<MakeQuiz isMenuOpen={showMenu} />} />
             <Route path="/list-quizes" element={<QuizList />} />
+            <Route path="/answer-quiz/:id" element={<AnswerQuiz />} />
+
           </Routes>
         </div>
       </div>

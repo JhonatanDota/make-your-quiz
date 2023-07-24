@@ -20,6 +20,14 @@ export async function getMyQuizes() {
   return response;
 }
 
+export async function getQuiz(id: number) {
+  const response = await axios.get(`${QUIZ_URL}${id}`, {
+    headers: HEADER,
+  });
+
+  return response;
+}
+
 export async function createQuiz(data: QuizModel) {
   const response = await axios.post(QUIZ_URL, data, {
     headers: HEADER,
