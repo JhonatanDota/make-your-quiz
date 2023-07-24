@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { BsFillXSquareFill, BsFillPlusSquareFill } from "react-icons/bs";
 import { toast } from "react-hot-toast";
+import TagsModel from "../models/TagsModel";
 
 interface TagsProps {
   max: number;
-  tags: string[];
+  tags: TagsModel;
   setTags: (tags: string[]) => void;
 }
 

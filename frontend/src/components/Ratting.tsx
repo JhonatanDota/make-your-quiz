@@ -3,22 +3,23 @@ interface RattingProps {
   icon: React.ReactNode;
   fillIcon: React.ReactNode;
   rating: number;
-  setRatting: (rating: number) => void;
-
+  setRatting?: (rating: number) => void | null;
 }
 
 export default function Ratting(props: RattingProps) {
   const { max, icon, fillIcon, rating, setRatting } = props;
+  const isClickable = setRatting ? true : false;
 
   return (
-    <div className="flex justify-center gap-2 md:gap-4">
+    <>
       {[...Array(max)].map((_, index: number) => {
         index += 1;
         return (
           <button
             type="button"
-            onClick={() => setRatting(index)}
-            className="text-2xl md:text-4xl font-bold"
+            disabled={!isClickable}
+            onClick={() => setRatting ? setRatting(index) : _}
+            className={`text-2xl md:text-4xl font-bold ${isClickable ? "cursor-none" : ""}`}
           >
             {index <= rating ? (
               fillIcon
@@ -28,6 +29,6 @@ export default function Ratting(props: RattingProps) {
           </button>
         );
       })}
-    </div>
+    </>
   );
 }

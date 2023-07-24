@@ -1,4 +1,5 @@
 import QuizQuestionModel from "./QuizQuestionModel";
+import TagsModel from "./TagsModel";
 
 export interface QuizModel {
   id?: number;
@@ -7,7 +8,7 @@ export interface QuizModel {
   description: string;
   questions: QuizQuestionModel[];
   difficult: number;
-  tags: string[];
+  tags: TagsModel;
   isActive?: boolean;
 }
 

@@ -321,13 +321,15 @@ export default function MakeQuiz(props: MakeQuizProps) {
         <label className="text-lg md:text-4xl font-bold ">
           Nível de Dificuldade
         </label>
-        <Ratting
-          max={MAX_DIFFICULT_RATE}
-          icon={<BsMortarboard />}
-          fillIcon={<BsMortarboardFill className="text-red-500" />}
-          rating={quizData.difficult}
-          setRatting={(rating) => handleQuizDataChange("difficult", rating)}
-        />
+        <div className="flex justify-center gap-2 md:gap-4">
+          <Ratting
+            max={MAX_DIFFICULT_RATE}
+            icon={<BsMortarboard />}
+            fillIcon={<BsMortarboardFill className="text-red-500" />}
+            rating={quizData.difficult}
+            setRatting={(rating) => handleQuizDataChange("difficult", rating)}
+          />
+        </div>
       </div>
 
       <div className="flex flex-col gap-16 md:w-2/3 mt-6 md:m-auto md:mt-10">
