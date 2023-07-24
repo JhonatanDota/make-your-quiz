@@ -44,14 +44,13 @@ export default function AnswerQuiz() {
     <div className="flex flex-col gap-y-4 md:gap-y-8 text-white text-center">
       {quiz ? (
         <>
-          <h1 className="text-3xl font-bold">{quiz.title}</h1>
-          <h2 className="text-lg font-bold">{quiz.description}</h2>
+          <h1 className="text-4xl font-bold">{quiz.title}</h1>
 
           <form className="flex flex-col gap-4 p-3" action="">
             {quiz.questions.map(
               (question: QuizQuestionModel, questionIndex: number) => (
                 <div
-                  className="flex flex-col px-4 py-4 border-4 border-yellow-300"
+                  className="flex flex-col gap-y-4 p-4 border-4 rounded-md border-yellow-300"
                   key={question.id}
                 >
                   <h2 className="text-2xl font-bold tracking-wider mb-4">
@@ -63,7 +62,11 @@ export default function AnswerQuiz() {
                       alternativeIndex: number
                     ) => (
                       <div
-                        className={`flex justify-between mt-2 p-3 rounded-lg cursor-pointer border-4 ${alternative.isSelected ? "border-green-400" : ""}`}
+                        className={`flex mt-2 p-3 rounded-lg cursor-pointer border-4 hover:text-black hover:bg-green-500 bg hover:border-green-500 transition ease-in-out delay-100 ${
+                          alternative.isSelected
+                            ? "text-black bg-green-500 bg border-green-500"
+                            : ""
+                        }`}
                         key={alternative.id}
                         onClick={() =>
                           handleChangeAnswer(
@@ -73,7 +76,7 @@ export default function AnswerQuiz() {
                           )
                         }
                       >
-                        <h1 className="text-lg font-bold">
+                        <h1 className="text-lg font-bold max-w-full">
                           {alternative.choice}
                         </h1>
                       </div>
