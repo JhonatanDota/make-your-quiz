@@ -19,7 +19,7 @@ class QuizRequest extends FormRequest
             'questions.*.question' => ['required', 'string'],
 
             'questions.*.alternatives' => ['required', 'array'],
-            'questions.*.alternatives.*.question' => ['required', 'string'],
+            'questions.*.alternatives.*.choice' => ['required', 'string'],
             'questions.*.alternatives.*.isCorrect' => ['required', 'boolean'],
 
             'tags' => ['array'],
@@ -84,8 +84,8 @@ class QuizRequest extends FormRequest
             'questions.*.alternatives.required' => 'The Alternatives field is required for all questions.',
             'questions.*.alternatives.array' => 'The Alternatives field must be an array for all questions.',
             
-            'questions.*.alternatives.*.question.required' => 'The Question field is required for all alternatives.',
-            'questions.*.alternatives.*.question.string' => 'The Question field must be a string for all alternatives.',
+            'questions.*.alternatives.*.choice.required' => 'The Choice field is required for all alternatives.',
+            'questions.*.alternatives.*.choice.string' => 'The Choice field must be a string for all alternatives.',
             
             'questions.*.alternatives.*.isCorrect.required' => 'The isCorrect field is required for all alternatives.',
             'questions.*.alternatives.*.isCorrect.boolean' => 'The isCorrect field must be a boolean for all alternatives.',

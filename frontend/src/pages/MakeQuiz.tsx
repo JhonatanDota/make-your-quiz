@@ -111,7 +111,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
     const newAlternative: QuizQuestionAlternativeModel = {
-      question: "Nova Alternativa",
+      choice: "Nova Alternativa",
       isCorrect: false,
     };
 
@@ -129,7 +129,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
     const updatedQuestions = [...quizData.questions];
     const quizQuestion = updatedQuestions[quizQuestionIndex];
-    quizQuestion.alternatives[quizQuestionAlternativeIndex].question =
+    quizQuestion.alternatives[quizQuestionAlternativeIndex].choice =
       newAlternativeText;
 
     updateQuizQuestion(quizQuestionIndex, quizQuestion);
@@ -221,7 +221,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
         let alternative: QuizQuestionAlternativeModel =
           alternatives[alternativeIndex];
 
-        if (!alternative.question) {
+        if (!alternative.choice) {
           toast.error(
             `A Alternativa ${alternativeIndex + 1} da Questão ${
               quizIndex + 1
@@ -387,7 +387,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
                       <input
                         className="p-1 md:p-3 text-sm md:text-lg lg:text-2xl bg-gray-950 border-2 font-bold border-yellow-400"
                         type="text"
-                        value={alternative.question}
+                        value={alternative.choice}
                         onChange={(event) =>
                           handleAlternativeTextChange(
                             event,
