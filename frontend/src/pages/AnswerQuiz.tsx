@@ -4,18 +4,23 @@ import { useParams } from "react-router-dom";
 import { getQuiz } from "../requests/quiz";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternativeModel from "../models/QuizQuestionAlternativeModel";
+import { Toaster, toast } from "react-hot-toast";
 
 export default function AnswerQuiz() {
   const { id } = useParams();
 
-  const [quiz, setQuiz] = useState<QuizModel>();
+  const [quizAnswered, setQuizAnswered] = useState<QuizModel>();
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   async function fetchQuiz(id: number) {
     try {
       const quiz = await getQuiz(id);
 
-      setQuiz(quiz.data);
-    } catch (error) {}
+      setQuizAnswered(quiz.data);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   useEffect(() => {
@@ -23,11 +28,11 @@ export default function AnswerQuiz() {
   }, [id]);
 
   function handleChangeAnswer(
-    quiz: QuizModel,
+    quizAnswered: QuizModel,
     questionIndex: number,
     alternativeIndex: number
   ) {
-    const updatedQuestions = [...quiz.questions];
+    const updatedQuestions = [...quizAnswered.questions];
     const quizQuestion = updatedQuestions[questionIndex];
 
     const questionAlternatives = quizQuestion.alternatives;
@@ -36,18 +41,69 @@ export default function AnswerQuiz() {
       questionAlternatives[i].isSelected = i === alternativeIndex;
     }
 
-    const updatedQuiz = { ...quiz, questions: updatedQuestions };
-    setQuiz(updatedQuiz);
+    const updatedQuiz = { ...quizAnswered, questions: updatedQuestions };
+    setQuizAnswered(updatedQuiz);
+  }
+
+  function checkQuizQuestionsSelectedAlternatives(
+    quizQuestions: QuizQuestionModel[]
+  ): boolean {
+    for (
+      let questionIndex: number = 0;
+      questionIndex < quizQuestions.length;
+      questionIndex++
+    ) {
+      let question = quizQuestions[questionIndex];
+      let alternatives = question.alternatives;
+      let haveSelectAlternative: boolean = false;
+
+      for (
+        let alternativeIndex: number = 0;
+        alternativeIndex < alternatives.length;
+        alternativeIndex++
+      ) {
+        let alternative = alternatives[alternativeIndex];
+        let isSelected = alternative.isSelected;
+
+        if (isSelected === true) {
+          haveSelectAlternative = isSelected;
+          break;
+        }
+      }
+
+      if (haveSelectAlternative === false) {
+        toast.error(`Questão ${questionIndex + 1} não respondida.`);
+        return haveSelectAlternative;
+      }
+    }
+
+    return true;
+  }
+
+  function answerQuiz(
+    event: React.FormEvent<HTMLFormElement>,
+    quizAnswered: QuizModel
+  ) {
+    event.preventDefault();
+
+    const quizQuestions = quizAnswered.questions;
+
+    if (checkQuizQuestionsSelectedAlternatives(quizQuestions) === false) return;
   }
 
   return (
     <div className="flex flex-col gap-y-4 md:gap-y-8 text-white text-center">
-      {quiz ? (
+      {isLoading ? (
+        <div></div>
+      ) : quizAnswered ? (
         <>
-          <h1 className="text-4xl font-bold">{quiz.title}</h1>
+          <h1 className="text-4xl font-bold">{quizAnswered.title}</h1>
 
-          <form className="flex flex-col gap-4 p-3" action="">
-            {quiz.questions.map(
+          <form
+            className="flex flex-col gap-4 p-3"
+            onSubmit={(event) => answerQuiz(event, quizAnswered)}
+          >
+            {quizAnswered.questions.map(
               (question: QuizQuestionModel, questionIndex: number) => (
                 <div
                   className="flex flex-col gap-y-4 p-4 border-4 rounded-md border-yellow-300"
@@ -62,7 +118,7 @@ export default function AnswerQuiz() {
                       alternativeIndex: number
                     ) => (
                       <div
-                        className={`flex mt-2 p-3 rounded-lg cursor-pointer border-4 hover:text-black hover:bg-green-500 bg hover:border-green-500 transition ease-in-out delay-100 ${
+                        className={`flex mt-2 p-3 rounded-lg cursor-pointer border-4 hover:text-black hover:bg-green-500 bg hover:border-green-500 transition ease-in-out delay-75 ${
                           alternative.isSelected
                             ? "text-black bg-green-500 bg border-green-500"
                             : ""
@@ -70,7 +126,7 @@ export default function AnswerQuiz() {
                         key={alternative.id}
                         onClick={() =>
                           handleChangeAnswer(
-                            quiz,
+                            quizAnswered,
                             questionIndex,
                             alternativeIndex
                           )
@@ -85,11 +141,18 @@ export default function AnswerQuiz() {
                 </div>
               )
             )}
+            <button
+              type="submit"
+              className="mt-4 rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500"
+            >
+              Concluir Quiz
+            </button>
           </form>
         </>
       ) : (
         <h1>Nao tem</h1>
       )}
+      <Toaster position="top-right" />
     </div>
   );
 }

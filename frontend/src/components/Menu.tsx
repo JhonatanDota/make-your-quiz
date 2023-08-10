@@ -29,7 +29,7 @@ export default function Menu(props: MenuProps) {
             <li>
                 <NavLink to="/user">
                   <button
-                    className="text-yellow-400 text-2xl md:text-5xl"
+                    className="text-yellow-400 text-3xl md:text-5xl"
                     title="Faça o seu"
                   >
                     <BsFillPersonVcardFill />
@@ -39,7 +39,7 @@ export default function Menu(props: MenuProps) {
               <li>
                 <NavLink to="/make-yours">
                   <button
-                    className="text-green-500 text-2xl md:text-5xl"
+                    className="text-green-500 text-3xl md:text-5xl"
                     title="Faça o seu"
                   >
                     <BsFillPlusSquareFill />
@@ -48,14 +48,14 @@ export default function Menu(props: MenuProps) {
               </li>
               <NavLink to="/list-quizes">
                 <button
-                  className="text-purple-400 text-2xl md:text-5xl"
-                  title="Faça o seu"
+                  className="text-purple-400 text-3xl md:text-5xl"
+                  title="Responda um"
                 >
                   <BsFillQuestionSquareFill />
                 </button>
               </NavLink>
               <button
-                className="text-blue-400 text-2xl md:text-5xl"
+                className="text-blue-400 text-3xl md:text-5xl"
                 title="Faça o seu"
               >
                 <BsFillInfoSquareFill />
