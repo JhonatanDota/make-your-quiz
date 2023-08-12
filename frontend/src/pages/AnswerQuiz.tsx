@@ -110,12 +110,14 @@ export default function AnswerQuiz() {
       checkQuizQuestionsSelectedAlternatives(extractedQuizAlternatives) ===
       false
     )
-      // handleAnswerQuiz({
-      //   quiz_id: quizAnswered.id,
-      //   alternatives: extractedQuizAlternatives
-      // });
-
       return;
+
+    handleAnswerQuiz({
+      quiz_id: quizAnswered.id,
+      alternatives: extractedQuizAlternatives,
+    });
+
+    return;
   }
 
   return (
