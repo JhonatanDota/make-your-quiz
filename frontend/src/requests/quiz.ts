@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_BASE_URL } from "../config";
 import { HEADER } from "../config";
-import { QuizModel } from "../models/QuizModel";
+import { QuizCreationModel } from "../models/QuizModel";
 import AnswerQuizModel from "../models/AnswerQuizModel";
 
 const QUIZ_URL = `${API_BASE_URL}quizes/`;
@@ -29,7 +29,7 @@ export async function getQuiz(id: number) {
   return response;
 }
 
-export async function createQuiz(data: QuizModel) {
+export async function createQuiz(data: QuizCreationModel) {
   const response = await axios.post(QUIZ_URL, data, {
     headers: HEADER,
   });

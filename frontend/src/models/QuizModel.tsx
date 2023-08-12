@@ -2,7 +2,7 @@ import QuizQuestionModel from "./QuizQuestionModel";
 import TagsModel from "./TagsModel";
 
 export interface QuizModel {
-  id?: number;
+  id: number;
   user_id?: number;
   title: string;
   description: string;
@@ -11,6 +11,8 @@ export interface QuizModel {
   tags: TagsModel;
   isActive?: boolean;
 }
+
+export type QuizCreationModel = Omit<QuizModel, "id">;
 
 export const QUIZ_DEFAULT_DATA = {
   title: "",

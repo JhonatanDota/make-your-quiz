@@ -8,7 +8,7 @@ import {
   BsMortarboard,
 } from "react-icons/bs";
 import ConfirmationModal from "../components/ConfirmationModal";
-import { QuizModel, QUIZ_DEFAULT_DATA } from "../models/QuizModel";
+import { QuizCreationModel, QUIZ_DEFAULT_DATA } from "../models/QuizModel";
 import { Toaster, toast } from "react-hot-toast";
 import { createQuiz } from "../requests/quiz";
 import { UserContext } from "../contexts/UserContext";
@@ -37,11 +37,13 @@ export default function MakeQuiz(props: MakeQuizProps) {
   const [quizQuestionIndexToDelete, setQuizQuestionIndexToDelete] =
     useState<number>(-1);
 
-  const [quizData, setQuizData] = useState<QuizModel>(loadInitialQuizData());
+  const [quizData, setQuizData] = useState<QuizCreationModel>(
+    loadInitialQuizData()
+  );
 
   const [creatingQuiz, setCreatingQuiz] = useState(false);
 
-  function loadInitialQuizData(): QuizModel {
+  function loadInitialQuizData(): QuizCreationModel {
     try {
       const quizDataStr: string | null = localStorage.getItem(
         LOCAL_STORAGE_ITEM_NAME
@@ -200,7 +202,8 @@ export default function MakeQuiz(props: MakeQuizProps) {
       quizIndex++
     ) {
       let quizQuestion = quizData.questions[quizIndex];
-      let alternatives: QuizQuestionAlternativeModel[] = quizQuestion.alternatives;
+      let alternatives: QuizQuestionAlternativeModel[] =
+        quizQuestion.alternatives;
       let haveCorrectAlternative = false;
 
       if (!quizQuestion.question) {
@@ -252,7 +255,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     handleCreateQuiz(quizData);
   }
 
-  async function handleCreateQuiz(quizDataToSend: QuizModel) {
+  async function handleCreateQuiz(quizDataToSend: QuizCreationModel) {
     setCreatingQuiz(true);
     try {
       await createQuiz(quizDataToSend)
