@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_BASE_URL } from "../config";
 import { HEADER } from "../config";
 import { QuizModel } from "../models/QuizModel";
+import AnswerQuizModel from "../models/AnswerQuizModel";
 
 const QUIZ_URL = `${API_BASE_URL}quizes/`;
 const MY_QUIZES_URL = `${API_BASE_URL}my-quizes/`;
@@ -33,4 +34,8 @@ export async function createQuiz(data: QuizModel) {
     headers: HEADER,
   });
   return response;
+}
+
+export async function answerQuiz(data: AnswerQuizModel){
+  console.log(data)
 }

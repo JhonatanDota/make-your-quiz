@@ -5,6 +5,7 @@ import { getQuiz } from "../requests/quiz";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternativeModel from "../models/QuizQuestionAlternativeModel";
 import { Toaster, toast } from "react-hot-toast";
+import AnswerQuizModel from "../models/AnswerQuizModel";
 
 export default function AnswerQuiz() {
   const { id } = useParams();
@@ -27,6 +28,10 @@ export default function AnswerQuiz() {
     if (id) fetchQuiz(parseInt(id));
   }, [id]);
 
+  async function handleAnswerQuiz(answerQuizData: AnswerQuizModel) {
+    console.log(answerQuizData);
+  }
+
   function handleChangeAnswer(
     quizAnswered: QuizModel,
     questionIndex: number,
@@ -45,35 +50,46 @@ export default function AnswerQuiz() {
     setQuizAnswered(updatedQuiz);
   }
 
-  function checkQuizQuestionsSelectedAlternatives(
+  function getQuestionsAlternatives(
     quizQuestions: QuizQuestionModel[]
+  ): QuizQuestionAlternativeModel[][] {
+    let alternatives = quizQuestions.map(
+      (question: QuizQuestionModel) => question.alternatives
+    );
+
+    return alternatives;
+  }
+
+  function checkQuizQuestionsSelectedAlternatives(
+    quizQuestionsAlternavies: QuizQuestionAlternativeModel[][]
   ): boolean {
     for (
-      let questionIndex: number = 0;
-      questionIndex < quizQuestions.length;
-      questionIndex++
+      let alternativesListsIndex: number = 0;
+      alternativesListsIndex < quizQuestionsAlternavies.length;
+      alternativesListsIndex++
     ) {
-      let question = quizQuestions[questionIndex];
-      let alternatives = question.alternatives;
-      let haveSelectAlternative: boolean = false;
+      let alternativesList: QuizQuestionAlternativeModel[] =
+        quizQuestionsAlternavies[alternativesListsIndex];
+      let haveSelectedAlternative: boolean = false;
 
       for (
-        let alternativeIndex: number = 0;
-        alternativeIndex < alternatives.length;
-        alternativeIndex++
+        let alternativesListIndex: number = 0;
+        alternativesListIndex < alternativesList.length;
+        alternativesListIndex++
       ) {
-        let alternative = alternatives[alternativeIndex];
-        let isSelected = alternative.isSelected;
+        let alternative: QuizQuestionAlternativeModel =
+          alternativesList[alternativesListIndex];
+        let isSelected: boolean | undefined = alternative.isSelected;
 
         if (isSelected === true) {
-          haveSelectAlternative = isSelected;
+          haveSelectedAlternative = true;
           break;
         }
       }
 
-      if (haveSelectAlternative === false) {
-        toast.error(`Questão ${questionIndex + 1} não respondida.`);
-        return haveSelectAlternative;
+      if (haveSelectedAlternative === false) {
+        toast.error(`Questão ${alternativesListsIndex + 1} não respondida.`);
+        return haveSelectedAlternative;
       }
     }
 
@@ -86,9 +102,20 @@ export default function AnswerQuiz() {
   ) {
     event.preventDefault();
 
-    const quizQuestions = quizAnswered.questions;
+    const quizQuestions: QuizQuestionModel[] = quizAnswered.questions;
+    const extractedQuizAlternatives: QuizQuestionAlternativeModel[][] =
+      getQuestionsAlternatives(quizQuestions);
 
-    if (checkQuizQuestionsSelectedAlternatives(quizQuestions) === false) return;
+    if (
+      checkQuizQuestionsSelectedAlternatives(extractedQuizAlternatives) ===
+      false
+    )
+      // handleAnswerQuiz({
+      //   quiz_id: quizAnswered.id,
+      //   alternatives: extractedQuizAlternatives
+      // });
+
+      return;
   }
 
   return (
