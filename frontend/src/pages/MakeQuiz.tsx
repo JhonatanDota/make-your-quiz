@@ -22,7 +22,7 @@ interface MakeQuizProps {
 export default function MakeQuiz(props: MakeQuizProps) {
   const { user } = useContext(UserContext);
   const MAX_DIFFICULT_RATE = 5;
-  const MAX_TAGS = 5;
+  const MAX_TAGS = 3;
 
   const LOCAL_STORAGE_ITEM_NAME = "quiz";
 

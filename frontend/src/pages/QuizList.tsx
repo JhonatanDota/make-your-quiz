@@ -23,7 +23,7 @@ export default function QuizList() {
   }, []);
 
   return (
-    <div className="flex flex-col p-6 gap-y-6">
+    <div className="flex flex-col p-4 gap-y-6">
       {quizList.length || loadingQuizList ? (
         quizList.map((quiz: QuizModel) => (
           <NavLink to={`/answer-quiz/${quiz.id}/`}>
