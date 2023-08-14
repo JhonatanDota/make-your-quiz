@@ -65,7 +65,7 @@ export default function Tags(props: TagsProps) {
 
       <div className="w-1/2 m-auto flex justify-center gap-2">
         <input
-          className="w-full rounded-md bg-black text-md md:text-3xl p-2 md:p-6 font-bold border-2 border-yellow-400"
+          className="w-full rounded-md bg-black text-md md:text-3xl p-2 md:p-6 font-bold border-8 border-yellow-400"
           type="text"
           value={tag}
           onChange={(e) => setTag(e.target.value)}
