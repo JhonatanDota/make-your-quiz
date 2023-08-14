@@ -9,7 +9,7 @@ use App\Interfaces\QuizRepositoryInterface;
 
 class QuizRepository implements QuizRepositoryInterface
 {
-    public function getAllQuizes(int $quantityByPage = 5) 
+    public function getAllQuizes(int $quantityByPage = 3) 
     {
         return Quiz::with('questions')->paginate($quantityByPage);
     }

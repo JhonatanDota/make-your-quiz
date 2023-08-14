@@ -7,8 +7,8 @@ import AnswerQuizModel from "../models/AnswerQuizModel";
 const QUIZ_URL = `${API_BASE_URL}quizes/`;
 const MY_QUIZES_URL = `${API_BASE_URL}my-quizes/`;
 
-export async function getAllQuizes() {
-  const response = await axios.get(QUIZ_URL, {
+export async function getAllQuizes(page?: string) {
+  const response = await axios.get(page ? page : QUIZ_URL , {
     headers: HEADER,
   });
   return response;
