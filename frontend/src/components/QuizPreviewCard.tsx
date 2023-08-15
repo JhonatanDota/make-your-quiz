@@ -21,7 +21,7 @@ export default function QuizPreviewCard(props: QuizPreviewProps) {
         <div className="flex flex-wrap justify-center gap-2">
           <TagsList
             tags={quiz.tags}
-            classes="text-xs md:text-lg lg:text-2xl border rounded-lg p-2 bg-white font-bold"
+            classes="text-xs md:text-lg lg:text-2xl bg-slate-200 border rounded-lg p-2 bg-white font-bold"
           />
         </div>
         <div className="flex gap-2">

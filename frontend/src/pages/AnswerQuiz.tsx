@@ -121,24 +121,24 @@ export default function AnswerQuiz() {
   }
 
   return (
-    <div className="flex flex-col gap-y-4 md:gap-y-8 text-white text-center">
+    <div className="flex flex-col md:w-1/2 md:m-auto gap-y-4 md:gap-y-8 text-slate-200 text-center">
       {isLoading ? (
         <div></div>
       ) : quizAnswered ? (
-        <>
-          <h1 className="text-4xl font-bold">{quizAnswered.title}</h1>
+        <div>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">{quizAnswered.title}</h1>
 
           <form
-            className="flex flex-col gap-4 p-3"
+            className="flex flex-col gap-4 md:gap-12 p-3 md:p-6"
             onSubmit={(event) => answerQuiz(event, quizAnswered)}
           >
             {quizAnswered.questions.map(
               (question: QuizQuestionModel, questionIndex: number) => (
                 <div
-                  className="flex flex-col gap-y-4 p-4 border-4 rounded-md border-yellow-300"
+                  className="flex flex-col gap-y-4 p-4 md:p-8 border-4 md:border-[15px] rounded-md border-yellow-300"
                   key={question.id}
                 >
-                  <h2 className="text-2xl font-bold tracking-wider mb-4">
+                  <h2 className="text-2xl md:text-4xl font-bold tracking-wider mb-4">
                     {question.question}
                   </h2>
                   {question.alternatives.map(
@@ -147,7 +147,7 @@ export default function AnswerQuiz() {
                       alternativeIndex: number
                     ) => (
                       <div
-                        className={`flex mt-2 p-3 rounded-lg cursor-pointer border-4 hover:text-black hover:bg-green-500 bg hover:border-green-500 transition ease-in-out delay-75 ${
+                        className={`flex mt-2 p-3 rounded-lg cursor-pointer border-4 md:border-[6px] hover:text-black hover:bg-green-500 bg hover:border-green-500 ${
                           alternative.isSelected
                             ? "text-black bg-green-500 bg border-green-500"
                             : ""
@@ -161,7 +161,7 @@ export default function AnswerQuiz() {
                           )
                         }
                       >
-                        <h1 className="text-lg font-bold max-w-full">
+                        <h1 className="text-lg md:text-3xl font-bold max-w-full">
                           {alternative.choice}
                         </h1>
                       </div>
@@ -177,7 +177,7 @@ export default function AnswerQuiz() {
               Concluir Quiz
             </button>
           </form>
-        </>
+        </div>
       ) : (
         <h1>Nao tem</h1>
       )}
