@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { QuizModel } from "../models/QuizModel";
 import { useParams } from "react-router-dom";
-import { getQuiz } from "../requests/quiz";
+import { getQuiz, answerQuiz as answerQuizRequest } from "../requests/quiz";
 import QuizQuestionModel from "../models/QuizQuestionModel";
 import QuizQuestionAlternativeModel from "../models/QuizQuestionAlternativeModel";
 import { Toaster, toast } from "react-hot-toast";
@@ -29,7 +29,13 @@ export default function AnswerQuiz() {
   }, [id]);
 
   async function handleAnswerQuiz(answerQuizData: AnswerQuizModel) {
-    console.log(answerQuizData);
+    try {
+      const quiz = await answerQuizRequest(answerQuizData);
+
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   function handleChangeAnswer(
@@ -172,7 +178,7 @@ export default function AnswerQuiz() {
             )}
             <button
               type="submit"
-              className="mt-4 rounded-md p-4 md:p-6 text-md md:text-2xl font-bold bg-green-500"
+              className="mt-4 rounded-md p-4 md:p-6 text-md md:text-3xl font-bold text-slate-100 bg-green-500"
             >
               Concluir Quiz
             </button>

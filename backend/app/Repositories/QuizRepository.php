@@ -55,4 +55,15 @@ class QuizRepository implements QuizRepositoryInterface
     {
         return Quiz::find($id)->update($data);
     }
+
+    public function answerQuiz(int $id, array $questionsAlternatives)
+    {
+        dd($questionsAlternatives);
+        $quiz = Quiz::findOrFail($id);
+        $questions = $quiz->questions;
+
+        foreach ($questionsAlternatives["alternatives"] as $question) {
+            dd($question);
+        }
+    }
 }

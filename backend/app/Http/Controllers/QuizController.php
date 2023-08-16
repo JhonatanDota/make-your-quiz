@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Repositories\QuizRepository;
 use App\Requests\QuizRequest;
+use App\Requests\AnswerQuizRequest;
 use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
@@ -37,5 +38,10 @@ class QuizController extends Controller
         $data['user_id'] = Auth::user()->id;
 
         return response()->json($this->quizRepository->createQuiz($data));
+    }
+
+    public function answerQuiz(int $id, AnswerQuizRequest $request)
+    {
+        return response()->json($this->quizRepository->answerQuiz($id, $request->all()));
     }
 }
