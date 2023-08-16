@@ -8,6 +8,8 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 use App\Models\Quiz;
+use App\Models\QuizQuestion;
+use App\Models\QuestionAlternative;
 
 class AnswerQuizRequest extends FormRequest
 {
@@ -15,12 +17,13 @@ class AnswerQuizRequest extends FormRequest
     {
         return [
             'quiz_id' => ['required', 'integer', Rule::exists(Quiz::class, 'id')],
-            'alternatives' => ['required', 'array'],
-            'alternatives.*' => ['required', 'array'],
-            'alternatives.*.*.id' => ['required', 'integer'],
-            'alternatives.*.*.quiz_question_id' => ['required', 'integer'],
-            'alternatives.*.*.choice' => ['required', 'string'],
-            'alternatives.*.*.isSelected' => ['required', 'boolean'],
+            'questions' => ['required', 'array'],
+            'questions.*.quiz_question_id' => ['required', Rule::exists(QuizQuestion::class, 'id')],
+            'questions.*.alternatives' => ['required', 'array'],
+            'questions.*.alternatives.*.id' => ['required', Rule::exists(QuestionAlternative::class, 'id')],
+            'questions.*.alternatives.*.quiz_question_id' => ['required', 'integer'],
+            'questions.*.alternatives.*.choice' => ['required', 'string'],
+            'questions.*.alternatives.*.is_selected' => ['required', 'boolean'],
         ];
     }
 

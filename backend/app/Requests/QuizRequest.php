@@ -20,7 +20,7 @@ class QuizRequest extends FormRequest
 
             'questions.*.alternatives' => ['required', 'array'],
             'questions.*.alternatives.*.choice' => ['required', 'string'],
-            'questions.*.alternatives.*.isCorrect' => ['required', 'boolean'],
+            'questions.*.alternatives.*.is_correct' => ['required', 'boolean'],
 
             'tags' => ['array'],
             'tags.*' => ['string'],
@@ -41,7 +41,7 @@ class QuizRequest extends FormRequest
                 $correctCount = 0;
 
                 foreach ($question['alternatives'] as $alternative) {
-                    if ($alternative['isCorrect']) {
+                    if ($alternative['is_correct']) {
                         $correctCount++;
                     }
                 }

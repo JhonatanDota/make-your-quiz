@@ -43,7 +43,7 @@ class QuizRepository implements QuizRepositoryInterface
                 QuestionAlternative::create([
                     'quiz_question_id' => $quizQuestion->id,
                     'choice' => $alternative['choice'],
-                    'is_correct' => $alternative['isCorrect']
+                    'is_correct' => $alternative['is_correct']
                 ]);
             }
         }

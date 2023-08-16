@@ -114,7 +114,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
     const newAlternative: QuizQuestionAlternativeCreationModel = {
       choice: "Nova Alternativa",
-      isCorrect: false,
+      is_correct: false,
     };
 
     quizQuestion.alternatives.push(newAlternative);
@@ -137,7 +137,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     updateQuizQuestion(quizQuestionIndex, quizQuestion);
   }
 
-  function handleAlternativeIsCorrectChange(
+  function handleAlternativeis_correctChange(
     quizQuestionIndex: number,
     quizQuestionAlternativeIndex: number
   ) {
@@ -147,7 +147,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     const quizQuestionAlternatives = quizQuestion.alternatives;
 
     for (let i: number = 0; i < quizQuestionAlternatives.length; i++) {
-      quizQuestionAlternatives[i].isCorrect =
+      quizQuestionAlternatives[i].is_correct =
         i === quizQuestionAlternativeIndex;
     }
 
@@ -232,7 +232,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
           );
           return false;
         }
-        if (alternative.isCorrect) haveCorrectAlternative = true;
+        if (alternative.is_correct) haveCorrectAlternative = true;
       }
 
       if (haveCorrectAlternative === false) {
@@ -403,9 +403,9 @@ export default function MakeQuiz(props: MakeQuizProps) {
                         <input
                           type="radio"
                           className="appearance-none cursor-pointer w-4 md:w-8 h-4 md:h-8 rounded border-2 border-white checked:bg-green-500 checked:border-transparent"
-                          checked={alternative.isCorrect}
+                          checked={alternative.is_correct}
                           onChange={() =>
-                            handleAlternativeIsCorrectChange(
+                            handleAlternativeis_correctChange(
                               quizQuestionIndex,
                               quizQuestionAlternativeIndex
                             )

@@ -49,7 +49,7 @@ export default function AnswerQuiz() {
     const questionAlternatives = quizQuestion.alternatives;
 
     for (let i: number = 0; i < questionAlternatives.length; i++) {
-      questionAlternatives[i].isSelected = i === alternativeIndex;
+      questionAlternatives[i].is_selected = i === alternativeIndex;
     }
 
     const updatedQuiz = { ...quizAnswered, questions: updatedQuestions };
@@ -89,7 +89,7 @@ export default function AnswerQuiz() {
       ) {
         let alternative: QuizQuestionAlternativeModel =
           alternativesList[alternativesListIndex];
-        let isSelected: boolean | undefined = alternative.isSelected;
+        let isSelected: boolean | undefined = alternative.is_selected;
 
         if (isSelected === true) {
           haveSelectedAlternative = true;
@@ -162,7 +162,7 @@ export default function AnswerQuiz() {
                     ) => (
                       <div
                         className={`flex mt-2 p-3 rounded-lg cursor-pointer border-4 md:border-[6px] hover:text-black hover:bg-green-500 bg hover:border-green-500 ${
-                          alternative.isSelected
+                          alternative.is_selected
                             ? "text-black bg-green-500 bg border-green-500"
                             : ""
                         }`}

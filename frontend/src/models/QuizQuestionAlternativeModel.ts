@@ -2,10 +2,10 @@ export interface QuizQuestionAlternativeModel {
     id: number,
     choice: string,
     isCorrect: boolean,
-    isSelected?: boolean,
+    is_selected?: boolean,
 }
 
 export interface QuizQuestionAlternativeCreationModel {
     choice: string,
-    isCorrect: boolean,
+    is_correct: boolean,
 }
