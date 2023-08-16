@@ -3,9 +3,10 @@ import { QuizModel } from "../models/QuizModel";
 import { useParams } from "react-router-dom";
 import { getQuiz, answerQuiz as answerQuizRequest } from "../requests/quiz";
 import { QuizQuestionModel } from "../models/QuizQuestionModel";
-import {QuizQuestionAlternativeModel} from "../models/QuizQuestionAlternativeModel";
+import { QuizQuestionAlternativeModel } from "../models/QuizQuestionAlternativeModel";
 import { Toaster, toast } from "react-hot-toast";
 import AnswerQuizModel from "../models/AnswerQuizModel";
+import AnswerQuizAlternativesModel from "../models/AnswerQuizAlternativesModel";
 
 export default function AnswerQuiz() {
   const { id } = useParams();
@@ -31,7 +32,6 @@ export default function AnswerQuiz() {
   async function handleAnswerQuiz(answerQuizData: AnswerQuizModel) {
     try {
       const quiz = await answerQuizRequest(answerQuizData);
-
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -58,24 +58,28 @@ export default function AnswerQuiz() {
 
   function getQuestionsAlternatives(
     quizQuestions: QuizQuestionModel[]
-  ): QuizQuestionAlternativeModel[][] {
-    let alternatives = quizQuestions.map(
-      (question: QuizQuestionModel) => question.alternatives
-    );
+  ): AnswerQuizAlternativesModel[] {
+    let alternatives = quizQuestions.map((question: QuizQuestionModel) => {
+      return {
+        quiz_question_id: question.id,
+        alternatives: question.alternatives,
+      };
+    });
 
     return alternatives;
   }
 
   function checkQuizQuestionsSelectedAlternatives(
-    quizQuestionsAlternavies: QuizQuestionAlternativeModel[][]
+    quizQuestionsAlternaves: AnswerQuizAlternativesModel[]
   ): boolean {
     for (
       let alternativesListsIndex: number = 0;
-      alternativesListsIndex < quizQuestionsAlternavies.length;
+      alternativesListsIndex < quizQuestionsAlternaves.length;
       alternativesListsIndex++
     ) {
       let alternativesList: QuizQuestionAlternativeModel[] =
-        quizQuestionsAlternavies[alternativesListsIndex];
+        quizQuestionsAlternaves[alternativesListsIndex].alternatives;
+
       let haveSelectedAlternative: boolean = false;
 
       for (
@@ -109,7 +113,7 @@ export default function AnswerQuiz() {
     event.preventDefault();
 
     const quizQuestions: QuizQuestionModel[] = quizAnswered.questions;
-    const extractedQuizAlternatives: QuizQuestionAlternativeModel[][] =
+    const extractedQuizAlternatives: AnswerQuizAlternativesModel[] =
       getQuestionsAlternatives(quizQuestions);
 
     if (
@@ -118,9 +122,11 @@ export default function AnswerQuiz() {
     )
       return;
 
+    console.log(extractedQuizAlternatives);
+
     handleAnswerQuiz({
       quiz_id: quizAnswered.id,
-      alternatives: extractedQuizAlternatives,
+      questions: extractedQuizAlternatives,
     });
 
     return;
@@ -132,7 +138,9 @@ export default function AnswerQuiz() {
         <div></div>
       ) : quizAnswered ? (
         <div>
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">{quizAnswered.title}</h1>
+          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+            {quizAnswered.title}
+          </h1>
 
           <form
             className="flex flex-col gap-4 md:gap-12 p-3 md:p-6"
