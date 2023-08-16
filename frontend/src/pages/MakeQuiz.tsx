@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
-import QuizQuestionModel from "../models/QuizQuestionModel";
-import QuizQuestionAlternativeModel from "../models/QuizQuestionAlternativeModel";
+import { QuizQuestionCreationModel } from "../models/QuizQuestionModel";
+import { QuizQuestionAlternativeCreationModel } from "../models/QuizQuestionAlternativeModel";
 import {
   BsFillTrash3Fill,
   BsFillPlusSquareFill,
@@ -61,7 +61,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
   }
 
   function addQuizQuestion() {
-    const newQuestion: QuizQuestionModel = {
+    const newQuestion: QuizQuestionCreationModel = {
       question: "Nova Questão",
       alternatives: [],
     };
@@ -94,14 +94,14 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
   function removeQuizQuestion(index: number) {
     const updatedQuestions = quizData.questions.filter(
-      (_: QuizQuestionModel, i: number) => i !== index
+      (_: QuizQuestionCreationModel, i: number) => i !== index
     );
     setQuizData((prevData) => ({ ...prevData, questions: updatedQuestions }));
   }
 
   function updateQuizQuestion(
     index: number,
-    updatedQuestion: QuizQuestionModel
+    updatedQuestion: QuizQuestionCreationModel
   ) {
     const updatedQuestions = [...quizData.questions];
     updatedQuestions[index] = updatedQuestion;
@@ -112,7 +112,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     const updatedQuestions = [...quizData.questions];
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
-    const newAlternative: QuizQuestionAlternativeModel = {
+    const newAlternative: QuizQuestionAlternativeCreationModel = {
       choice: "Nova Alternativa",
       isCorrect: false,
     };
@@ -162,7 +162,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
     const quizQuestion = updatedQuestions[quizQuestionIndex];
 
     const updatedAlternatives = quizQuestion.alternatives.filter(
-      (_: QuizQuestionAlternativeModel, i: number) =>
+      (_: QuizQuestionAlternativeCreationModel, i: number) =>
         i !== quizQuestionAlternativeIndex
     );
 
@@ -202,7 +202,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
       quizIndex++
     ) {
       let quizQuestion = quizData.questions[quizIndex];
-      let alternatives: QuizQuestionAlternativeModel[] =
+      let alternatives: QuizQuestionAlternativeCreationModel[] =
         quizQuestion.alternatives;
       let haveCorrectAlternative = false;
 
@@ -221,7 +221,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
         alternativeIndex < alternatives.length;
         alternativeIndex++
       ) {
-        let alternative: QuizQuestionAlternativeModel =
+        let alternative: QuizQuestionAlternativeCreationModel =
           alternatives[alternativeIndex];
 
         if (!alternative.choice) {
@@ -337,7 +337,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
       <div className="flex flex-col gap-16 md:w-2/3 mt-6 md:m-auto md:mt-10">
         {quizData.questions.map(
-          (quizQuestion: QuizQuestionModel, quizQuestionIndex: number) => (
+          (quizQuestion: QuizQuestionCreationModel, quizQuestionIndex: number) => (
             <div
               className={`flex flex-col gap-6 md:gap-10 rounded-md p-4 border-4 md:border-8 ${
                 quizQuestionIndex % 2 === 0
@@ -373,7 +373,7 @@ export default function MakeQuiz(props: MakeQuizProps) {
 
               {quizQuestion.alternatives.map(
                 (
-                  alternative: QuizQuestionAlternativeModel,
+                  alternative: QuizQuestionAlternativeCreationModel,
                   quizQuestionAlternativeIndex: number
                 ) => (
                   <div

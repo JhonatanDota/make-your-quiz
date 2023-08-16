@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { QuizModel } from "../models/QuizModel";
 import { useParams } from "react-router-dom";
 import { getQuiz, answerQuiz as answerQuizRequest } from "../requests/quiz";
-import QuizQuestionModel from "../models/QuizQuestionModel";
-import QuizQuestionAlternativeModel from "../models/QuizQuestionAlternativeModel";
+import { QuizQuestionModel } from "../models/QuizQuestionModel";
+import {QuizQuestionAlternativeModel} from "../models/QuizQuestionAlternativeModel";
 import { Toaster, toast } from "react-hot-toast";
 import AnswerQuizModel from "../models/AnswerQuizModel";
 

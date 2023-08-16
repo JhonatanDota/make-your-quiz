@@ -1,4 +1,4 @@
-import QuizQuestionModel from "./QuizQuestionModel";
+import { QuizQuestionModel, QuizQuestionCreationModel } from "./QuizQuestionModel";
 import TagsModel from "./TagsModel";
 
 export interface QuizModel {
@@ -9,10 +9,16 @@ export interface QuizModel {
   questions: QuizQuestionModel[];
   difficult: number;
   tags: TagsModel;
-  isActive?: boolean;
 }
 
-export type QuizCreationModel = Omit<QuizModel, "id">;
+export interface QuizCreationModel {
+  title: string;
+  description: string;
+  questions: QuizQuestionCreationModel[];
+  difficult: number;
+  tags: TagsModel;
+}
+
 
 export const QUIZ_DEFAULT_DATA = {
   title: "",
