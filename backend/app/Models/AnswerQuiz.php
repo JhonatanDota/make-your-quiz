@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class AnswerQuiz extends Model
 {
+
+    protected $table = 'answers_quiz';
+
     /**
      * The attributes that are mass assignable.
      */
@@ -13,6 +16,8 @@ class AnswerQuiz extends Model
         'user_id',
         'quiz_id',
         'answers',
+        'question_count',
+        'correct_count'
     ];
 
     /**
@@ -28,5 +33,7 @@ class AnswerQuiz extends Model
         'user_id' => 'integer',
         'quiz_id' => 'integer',
         'answers' => 'json',
+        'question_count' => 'integer',
+        'correct_count' => 'integer',
     ];
 }

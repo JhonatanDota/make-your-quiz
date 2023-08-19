@@ -4,5 +4,5 @@ namespace App\Interfaces;
 
 interface AnswerQuizRepositoryInterface 
 {
-    public function createAnswerQuiz(array $data);
+    public function createAnswerQuiz(int $quizId, array $data);
 }

@@ -20,6 +20,8 @@ class CreateAnswersQuizTable extends Migration
             $table->integer('quiz_id')->unsigned();
             $table->foreign('quiz_id')->references('id')->on('quizes');
             $table->json('answers');
+            $table->integer('question_count');
+            $table->integer('correct_count');
             $table->timestamps();
         });
     }

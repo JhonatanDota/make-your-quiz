@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Repositories\QuizRepository;
 use App\Requests\QuizRequest;
-use App\Requests\AnswerQuizRequest;
 use Illuminate\Support\Facades\Auth;
 
 class QuizController extends Controller
