@@ -39,9 +39,4 @@ class QuizController extends Controller
 
         return response()->json($this->quizRepository->createQuiz($data));
     }
-
-    public function answerQuiz(int $id, AnswerQuizRequest $request)
-    {
-        return response()->json($this->quizRepository->answerQuiz($id, $request->all()));
-    }
 }

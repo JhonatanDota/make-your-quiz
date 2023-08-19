@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizController;
+use App\Http\Controllers\AnswerQuizController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -24,5 +26,7 @@ Route::get('quizes', [QuizController::class, 'getAllQuizes']);
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('my-quizes', [QuizController::class, 'getMyQuizes']);
     Route::post('quizes', [QuizController::class, 'createQuiz']);
-    Route::post('answer-quiz/{id}', [QuizController::class, 'answerQuiz']);
+
+
+    Route::post('answer-quiz/{id}', [AnswerQuizController::class, 'createAnswerQuiz']);
 });
