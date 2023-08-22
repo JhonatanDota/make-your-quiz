@@ -122,14 +122,10 @@ export default function AnswerQuiz() {
     )
       return;
 
-    console.log(extractedQuizAlternatives);
-
     handleAnswerQuiz({
       quiz_id: quizAnswered.id,
       questions: extractedQuizAlternatives,
     });
-
-    return;
   }
 
   return (

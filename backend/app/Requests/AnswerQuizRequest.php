@@ -6,8 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Carbon\Carbon;
 use App\Models\Quiz;
+use App\Models\AnswerQuiz;
 use App\Models\QuizQuestion;
 use App\Models\QuestionAlternative;
 
@@ -25,6 +28,19 @@ class AnswerQuizRequest extends FormRequest
             'questions.*.alternatives.*.choice' => ['required', 'string'],
             'questions.*.alternatives.*.is_selected' => ['required', 'boolean'],
         ];
+    }
+
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $quizId = $this->input('quiz_id');
+            $lastHours = Carbon::now()->subHours(AnswerQuiz::COOLDOWN_TO_ANSWER_AGAIN_IN_HOURS);
+
+            $answeredLastHoursExists = AnswerQuiz::where('user_id', Auth::user()->id)->where('quiz_id', $quizId)->where('created_at', '>=', $lastHours)->exists();
+
+            if($answeredLastHoursExists)
+                $validator->errors()->add('answer_quiz', 'Each question must have a unique correct alternative.');
+        });
     }
 
     public function failedValidation(Validator $validator)
