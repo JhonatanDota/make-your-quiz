@@ -38,22 +38,22 @@ export default function Login() {
       className="mt-24 flex flex-col gap-y-6 text-center"
       onSubmit={(event) => handleSubmit(event)}
     >
-      <div className="flex flex-col gap-3 text-white">
-        <label className="text-2xl md:text-4xl font-bold ">Username</label>
+      <div className="flex flex-col gap-5 text-slate-200 w-full md:w-1/2 m-auto">
+        <label className="text-2xl md:text-4xl font-bold">Username</label>
         <input
-          className="text-lg md:text-4xl p-2 md:p-6 bg-gray-950 border-4 md:border-8 rounded-md font-bold border-yellow-400"
+          className="text-lg md:text-4xl p-2 md:p-6 bg-gray-950 border-4 md:border-8 rounded-md font-bold border-yellow-400 focus:outline-none"
           type="text"
           value={username}
           onChange={(event) => setUsername(event.target.value)}
         />
       </div>
 
-      <div className="flex flex-col gap-3 text-white">
+      <div className="flex flex-col gap-5 text-slate-200 w-full md:w-1/2 m-auto">
         <div className="flex justify-center items-center gap-3">
-          <label className="text-2xl md:text-4xl font-bold ">Senha</label>
+          <label className="text-2xl md:text-4xl font-bold">Senha</label>
           <button
             type="button"
-            className="text-2xl"
+            className="text-2xl md:text-3xl"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
@@ -65,7 +65,7 @@ export default function Login() {
         </div>
 
         <input
-          className="text-lg md:text-4xl p-2 md:p-6 bg-gray-950 border-4 md:border-8 rounded-md font-bold border-yellow-400"
+          className="text-lg md:text-4xl p-2 md:p-6 bg-gray-950 border-4 md:border-8 rounded-md font-bold border-yellow-400 focus:outline-none"
           type={showPassword ? "text" : "password"}
           value={password}
           onChange={(event) => setPassword(event.target.value)}
@@ -74,7 +74,7 @@ export default function Login() {
 
       <button
         type="submit"
-        className="w-1/2 m-auto rounded-md p-4 md:p-6 text-lg md:text-2xl font-bold bg-green-500 disabled:opacity-60 disabled:cursor-not-allowed"
+        className="w-1/2 md:w-1/4 m-auto rounded-md p-4 md:p-6 text-lg md:text-2xl font-bold bg-green-500 disabled:opacity-60 disabled:cursor-not-allowed"
         disabled={username && password ? false : true}
       >
         Entrar
