@@ -7,11 +7,13 @@ export default function User() {
   const { user } = useContext(UserContext);
 
   return (
-    <div className="mt-[50%] md:mt-[10%] flex flex-col gap-y-4 md:gap-y-8 text-center">
+    <div className="flex flex-col gap-y-4 md:gap-y-8 text-center">
       {user ? (
-        <UserLoggedView user={user} />
+        <div className="mt-[5%]">
+          <UserLoggedView user={user} />
+        </div>
       ) : (
-        <div className="w-full m-auto flex flex-col gap-12">
+        <div className="w-full mt-[50%] md:mt-[10%] m-auto flex flex-col gap-12">
           <NavLink to="/login">
             <button
               type="button"

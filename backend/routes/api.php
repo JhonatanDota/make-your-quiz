@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\AnswerQuizController;
+use App\Http\Controllers\AnalyticsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,8 +26,10 @@ Route::get('quizes', [QuizController::class, 'getAllQuizes']);
 
 Route::group(['middleware' => 'jwt.auth'], function () {
     Route::get('my-quizes', [QuizController::class, 'getMyQuizes']);
+    
     Route::post('quizes', [QuizController::class, 'createQuiz']);
-
-
+    
     Route::post('answer-quiz/{id}', [AnswerQuizController::class, 'createAnswerQuiz']);
+    
+    Route::get('my-analytics', [AnalyticsController::class, 'getMyAnalytics']);
 });
