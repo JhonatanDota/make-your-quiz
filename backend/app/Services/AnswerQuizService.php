@@ -71,6 +71,7 @@ class AnswerQuizService
                     if ($questionAlternative->is_correct) {
                         $this->increaseCorrectCount();
                         $guessed = true;
+                        
                     }
 
 

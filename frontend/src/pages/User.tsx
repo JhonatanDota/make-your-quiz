@@ -13,7 +13,7 @@ export default function User() {
           <UserLoggedView user={user} />
         </div>
       ) : (
-        <div className="w-full mt-[50%] md:mt-[10%] m-auto flex flex-col gap-12">
+        <div className="w-full mt-24 md:mt-36 m-auto flex flex-col gap-12">
           <NavLink to="/login">
             <button
               type="button"

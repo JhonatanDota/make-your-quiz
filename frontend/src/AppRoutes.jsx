@@ -15,7 +15,7 @@ export default function AppRoutes() {
     <BrowserRouter>
       <div className="flex h-full">
         <Menu showMenu={showMenu} setShowMenu={setShowMenu}/>
-        <div className={`mt-10 md:mt-16 py-8 px-4 ${showMenu ? "ml-auto w-5/6 md:w-full" : "w-full"}`}>
+        <div className={`mt-14 py-8 px-4 ${showMenu ? "ml-auto w-5/6 md:w-full" : "w-full"}`}>
           <Routes>
             <Route path="/" element={<Home />} />
 

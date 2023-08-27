@@ -40,6 +40,7 @@ class AnswerQuizRequest extends FormRequest
 
             if($answeredLastHoursExists)
                 $validator->errors()->add('answer_quiz', 'Each question must have a unique correct alternative.');
+                
         });
     }
 
