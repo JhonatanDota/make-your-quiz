@@ -1,5 +1,7 @@
 import { NavLink } from "react-router-dom";
 import icon from "../assets/images/icon-quiz.png";
+import { useContext } from "react";
+import { UserContext } from "../contexts/UserContext";
 import {
   BsFillArrowRightCircleFill,
   BsFillArrowLeftCircleFill,
@@ -7,7 +9,9 @@ import {
   BsFillQuestionSquareFill,
   BsFillInfoSquareFill,
   BsFillPersonVcardFill,
+  BsFillArrowLeftSquareFill,
 } from "react-icons/bs";
+import { logout } from "../config";
 
 interface MenuProps {
   showMenu: boolean;
@@ -17,6 +21,8 @@ interface MenuProps {
 export default function Menu(props: MenuProps) {
   const { showMenu, setShowMenu } = props;
 
+  const { user } = useContext(UserContext);
+
   return (
     <div className="flex fixed h-full">
       {showMenu && (
@@ -24,9 +30,9 @@ export default function Menu(props: MenuProps) {
           <div>
             <img src={icon} alt="icon" />
           </div>
-          <div className="h-2/3">
+          <div className="h-3/4">
             <ul className="flex flex-col items-center gap-8 md:gap-16 text-white text-sm">
-            <li>
+              <li>
                 <NavLink to="/user">
                   <button
                     className="text-yellow-400 text-3xl md:text-5xl"
@@ -46,20 +52,35 @@ export default function Menu(props: MenuProps) {
                   </button>
                 </NavLink>
               </li>
-              <NavLink to="/list-quizes">
+              <li>
+                <NavLink to="/list-quizes">
+                  <button
+                    className="text-purple-400 text-3xl md:text-5xl"
+                    title="Responda um"
+                  >
+                    <BsFillQuestionSquareFill />
+                  </button>
+                </NavLink>
+              </li>
+              <li>
                 <button
-                  className="text-purple-400 text-3xl md:text-5xl"
-                  title="Responda um"
+                  className="text-blue-400 text-3xl md:text-5xl"
+                  title="Faça o seu"
                 >
-                  <BsFillQuestionSquareFill />
+                  <BsFillInfoSquareFill />
                 </button>
-              </NavLink>
-              <button
-                className="text-blue-400 text-3xl md:text-5xl"
-                title="Faça o seu"
-              >
-                <BsFillInfoSquareFill />
-              </button>
+              </li>
+              {user && (
+                <li className="mt-10">
+                  <button
+                    className="text-red-400 text-3xl md:text-5xl"
+                    title="Sair"
+                    onClick={logout}
+                  >
+                    <BsFillArrowLeftSquareFill />
+                  </button>
+                </li>
+              )}
             </ul>
           </div>
         </div>

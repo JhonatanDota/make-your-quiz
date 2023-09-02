@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import UserModel from "../models/UserModel";
-import { logout } from "../config";
-import { QuizModel } from "../models/QuizModel";
 import {
   MyAnalyticsModel,
   MY_ANALYTICS_DEFAULT_DATA,
@@ -53,26 +51,26 @@ export default function UserLoggedView(props: UserLoggedViewProps) {
       <div className="grid grid-cols-2 md:flex md:justify-evenly gap-2 font-bold">
         <button className="flex flex-col items-center md:w-1/4 gap-2 bg-blue-950 p-4 md:p-12 rounded-lg text-lg">
           <p className="text-md md:text-3xl text-slate-100">Criados</p>
-          {
-            isLoading ? analyticSkeleton() : <p className="text-md md:text-3xl text-red-200">{myAnalytics.maded}</p>
-          }
+          {isLoading ? (
+            analyticSkeleton()
+          ) : (
+            <p className="text-md md:text-3xl text-red-200">
+              {myAnalytics.maded}
+            </p>
+          )}
         </button>
 
         <button className="flex flex-col items-center md:w-1/4 gap-2 bg-blue-950 p-4 md:p-12 rounded-lg text-lg">
           <p className="text-md md:text-3xl text-slate-100">Respondidos</p>
-          {
-            isLoading ? analyticSkeleton() : <p className="text-md md:text-3xl text-red-200">{myAnalytics.answered}</p>
-          }
+          {isLoading ? (
+            analyticSkeleton()
+          ) : (
+            <p className="text-md md:text-3xl text-red-200">
+              {myAnalytics.answered}
+            </p>
+          )}
         </button>
       </div>
-
-      <button
-        type="button"
-        className="text-md md:text-2xl w-1/2 md:w-1/5 m-auto text-center rounded-md p-2 md:p-6 text-lg font-bold bg-red-500"
-        onClick={logout}
-      >
-        Sair
-      </button>
     </div>
   );
 }
