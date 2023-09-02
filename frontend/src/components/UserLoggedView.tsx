@@ -44,31 +44,31 @@ export default function UserLoggedView(props: UserLoggedViewProps) {
   }
 
   return (
-    <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-2 font-bold">
-        <h1 className="text-yellow-500 text-3xl">Olá,</h1>
-        <h1 className="text-white text-2xl">{user.username}</h1>
+    <div className="flex flex-col gap-10 md:gap-16">
+      <div className="flex flex-col gap-2 md:gap-6 font-bold">
+        <h1 className="text-yellow-500 text-3xl md:text-6xl">Olá,</h1>
+        <h1 className="text-white text-2xl md:text-5xl">{user.username}</h1>
       </div>
 
-      <div className="grid grid-cols-2 gap-2 font-bold">
-        <div className="flex flex-col gap-2 bg-blue-950 p-4 rounded-lg text-lg">
-          <p className="text-slate-100">Criados</p>
+      <div className="grid grid-cols-2 md:flex md:justify-evenly gap-2 font-bold">
+        <button className="flex flex-col items-center md:w-1/4 gap-2 bg-blue-950 p-4 md:p-12 rounded-lg text-lg">
+          <p className="text-md md:text-3xl text-slate-100">Criados</p>
           {
-            isLoading ? analyticSkeleton() : <p className="text-red-200">{myAnalytics.maded}</p>
+            isLoading ? analyticSkeleton() : <p className="text-md md:text-3xl text-red-200">{myAnalytics.maded}</p>
           }
-        </div>
+        </button>
 
-        <div className="flex flex-col gap-2 bg-blue-950 p-4 rounded-lg text-lg">
-          <p className="text-slate-100">Respondidos</p>
+        <button className="flex flex-col items-center md:w-1/4 gap-2 bg-blue-950 p-4 md:p-12 rounded-lg text-lg">
+          <p className="text-md md:text-3xl text-slate-100">Respondidos</p>
           {
-            isLoading ? analyticSkeleton() : <p className="text-red-200">{myAnalytics.answered}</p>
+            isLoading ? analyticSkeleton() : <p className="text-md md:text-3xl text-red-200">{myAnalytics.answered}</p>
           }
-        </div>
+        </button>
       </div>
 
       <button
         type="button"
-        className="w-1/2 m-auto text-center rounded-md p-2 md:p-6 text-lg font-bold bg-red-500"
+        className="text-md md:text-2xl w-1/2 md:w-1/5 m-auto text-center rounded-md p-2 md:p-6 text-lg font-bold bg-red-500"
         onClick={logout}
       >
         Sair

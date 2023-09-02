@@ -31,7 +31,20 @@ export default function AnswerQuiz() {
 
   async function handleAnswerQuiz(answerQuizData: AnswerQuizModel) {
     try {
-      const quiz = await answerQuizRequest(answerQuizData);
+      await answerQuizRequest(answerQuizData)
+        .then((_) => {
+          toast.success("Quiz Respondido com Sucesso !");
+          fetchQuiz(answerQuizData.quiz_id);
+        })
+        .catch((error) => {
+          const response = error.response;
+          const statusCode = response.status;
+
+          if (statusCode == 401)
+            toast.error("Você precisa estar logado para responder ao quiz.");
+
+          if (statusCode == 400) toast.error(response.data.errors.answer_quiz);
+        });
     } catch (error) {
     } finally {
       setIsLoading(false);
@@ -157,7 +170,7 @@ export default function AnswerQuiz() {
                       alternativeIndex: number
                     ) => (
                       <div
-                        className={`flex mt-2 p-3 rounded-lg cursor-pointer border-4 md:border-[6px] hover:text-black hover:bg-green-500 bg hover:border-green-500 ${
+                        className={`flex mt-2 p-4 rounded-lg cursor-pointer border-4 md:border-[6px] hover:text-black hover:bg-green-400 bg hover:border-green-400 ${
                           alternative.is_selected
                             ? "text-black bg-green-500 bg border-green-500"
                             : ""
@@ -171,7 +184,7 @@ export default function AnswerQuiz() {
                           )
                         }
                       >
-                        <h1 className="text-lg md:text-3xl font-bold max-w-full">
+                        <h1 className="text-lg md:text-3xl font-bold max-w-full break-all text-start md:leading-normal">
                           {alternative.choice}
                         </h1>
                       </div>

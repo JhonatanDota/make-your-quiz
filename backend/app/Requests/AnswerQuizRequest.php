@@ -36,11 +36,12 @@ class AnswerQuizRequest extends FormRequest
             $quizId = $this->input('quiz_id');
             $lastHours = Carbon::now()->subHours(AnswerQuiz::COOLDOWN_TO_ANSWER_AGAIN_IN_HOURS);
 
-            $answeredLastHoursExists = AnswerQuiz::where('user_id', Auth::user()->id)->where('quiz_id', $quizId)->where('created_at', '>=', $lastHours)->exists();
+            $answeredLastHours = AnswerQuiz::where('user_id', Auth::user()->id)->where('quiz_id', $quizId)->where('created_at', '>=', $lastHours)->orderBy('created_at', 'DESC')->first();
 
-            if($answeredLastHoursExists)
-                $validator->errors()->add('answer_quiz', 'Each question must have a unique correct alternative.');
-                
+            if ($answeredLastHours) {
+                $hoursDiff = $answeredLastHours->created_at->diff($lastHours)->format('%H:%I:%S');
+                $validator->errors()->add('answer_quiz', "Só é possível responder este quiz novamente daqui $hoursDiff.");
+            }
         });
     }
 
