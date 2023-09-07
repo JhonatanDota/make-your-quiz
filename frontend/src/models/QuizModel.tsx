@@ -19,6 +19,7 @@ export interface QuizCreationModel {
   tags: TagsModel;
 }
 
+export type QuizWithoutQuestionsModel = Omit<QuizModel, "questions">;
 
 export const QUIZ_DEFAULT_DATA = {
   title: "",

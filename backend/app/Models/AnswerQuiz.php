@@ -25,7 +25,7 @@ class AnswerQuiz extends Model
      * The attributes to hide.
     */
 
-    protected $hidden = [];
+    protected $hidden = ['quiz_id'];
 
     /**
      * The attributes that should be casted to native types
@@ -45,4 +45,12 @@ class AnswerQuiz extends Model
     */
     
     const COOLDOWN_TO_ANSWER_AGAIN_IN_HOURS = 3;
+
+    /**
+     * Relationships
+    */
+
+    public function quiz(){
+        return $this->belongsTo(Quiz::class);
+    }
 }

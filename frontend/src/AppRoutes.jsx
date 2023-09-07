@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import MakeQuiz from "./pages/MakeQuiz";
 import QuizList from "./pages/QuizList";
 import AnswerQuiz from "./pages/AnswerQuiz";
+import AnsweredQuizList from "./pages/AnsweredQuizList";
 
 export default function AppRoutes() {
   const [showMenu, setShowMenu] = useState(true);
@@ -14,18 +15,26 @@ export default function AppRoutes() {
   return (
     <BrowserRouter>
       <div className="flex h-full">
-        <Menu showMenu={showMenu} setShowMenu={setShowMenu}/>
-        <div className={`mt-14 py-8 px-4 ${showMenu ? "ml-auto w-5/6 md:w-full" : "w-full"}`}>
+        <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
+        <div
+          className={`mt-14 py-8 px-4 ${
+            showMenu ? "ml-auto w-5/6 md:w-full" : "w-full"
+          }`}
+        >
           <Routes>
             <Route path="/" element={<Home />} />
 
             <Route path="/user" element={<User />} />
             <Route path="/login" element={<Login />} />
 
-            <Route path="/make-yours" element={<MakeQuiz isMenuOpen={showMenu} />} />
+            <Route
+              path="/make-yours"
+              element={<MakeQuiz isMenuOpen={showMenu} />}
+            />
             <Route path="/list-quizes" element={<QuizList />} />
             <Route path="/answer-quiz/:id" element={<AnswerQuiz />} />
 
+            <Route path="/answered-quiz-list" element={<AnsweredQuizList />} />
           </Routes>
         </div>
       </div>

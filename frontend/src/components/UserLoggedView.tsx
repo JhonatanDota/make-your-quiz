@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import UserModel from "../models/UserModel";
 import {
   MyAnalyticsModel,
@@ -60,16 +61,18 @@ export default function UserLoggedView(props: UserLoggedViewProps) {
           )}
         </button>
 
-        <button className="flex flex-col items-center md:w-1/4 gap-2 bg-blue-950 p-4 md:p-12 rounded-lg text-lg">
-          <p className="text-md md:text-3xl text-slate-100">Respondidos</p>
-          {isLoading ? (
-            analyticSkeleton()
-          ) : (
-            <p className="text-md md:text-3xl text-red-200">
-              {myAnalytics.answered}
-            </p>
-          )}
-        </button>
+        <NavLink to="/answered-quiz-list" className="md:w-1/4">
+          <button className="flex flex-col items-center w-full gap-2 bg-blue-950 p-4 md:p-12 rounded-lg text-lg">
+            <p className="text-md md:text-3xl text-slate-100">Respondidos</p>
+            {isLoading ? (
+              analyticSkeleton()
+            ) : (
+              <p className="text-md md:text-3xl text-red-200">
+                {myAnalytics.answered}
+              </p>
+            )}
+          </button>
+        </NavLink>
       </div>
     </div>
   );

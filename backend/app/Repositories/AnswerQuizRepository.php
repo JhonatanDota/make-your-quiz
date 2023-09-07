@@ -10,7 +10,7 @@ use App\Interfaces\AnswerQuizRepositoryInterface;
 
 class AnswerQuizRepository implements AnswerQuizRepositoryInterface
 {
-    public function createAnswerQuiz(int $quizId, array $data) 
+    public function createAnswerQuiz(int $quizId, array $data)
     {
         $quizWithQuestions = Quiz::with('questions')->findOrFail($quizId);
 
@@ -21,8 +21,13 @@ class AnswerQuizRepository implements AnswerQuizRepositoryInterface
             'user_id' => Auth::user()->id,
             'quiz_id' => $quizId,
             'answers' => $answerQuizService->getAnswerQuizData(),
-            'question_count' => $answerQuizService->getCorrectCount(),
-            'correct_count' => count($answerQuizService->getQuestions()),
+            'question_count' => count($answerQuizService->getQuestions()),
+            'correct_count' => $answerQuizService->getCorrectCount(),
         ]);
+    }
+
+    public function getMyAnsweredQuizes(int $userId)
+    {
+        return AnswerQuiz::with('quiz')->where('user_id', $userId)->get();
     }
 }

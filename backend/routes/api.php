@@ -32,4 +32,6 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::post('answer-quiz/{id}', [AnswerQuizController::class, 'createAnswerQuiz']);
     
     Route::get('my-analytics', [AnalyticsController::class, 'getMyAnalytics']);
+
+    Route::get('my-answered-quizes', [AnswerQuizController::class, 'getMyAnsweredQuizes']);
 });
