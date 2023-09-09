@@ -18,7 +18,7 @@ export default function AppRoutes() {
         <Menu showMenu={showMenu} setShowMenu={setShowMenu} />
         <div
           className={`mt-14 py-8 px-4 ${
-            showMenu ? "ml-auto w-5/6 md:w-full" : "w-full"
+            showMenu ? "ml-auto w-5/6 md:w-full ease-in duration-300" : "w-full"
           }`}
         >
           <Routes>
