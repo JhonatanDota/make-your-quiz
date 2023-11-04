@@ -18,14 +18,12 @@ export default function Ratting(props: RattingProps) {
           <button
             type="button"
             disabled={!isClickable}
-            onClick={() => setRatting ? setRatting(index) : _}
-            className={`text-2xl md:text-3xl lg:text-5xl font-bold ${isClickable ? "cursor-none" : ""}`}
+            onClick={() => (setRatting ? setRatting(index) : _)}
+            className={`text-2xl md:text-3xl lg:text-5xl font-bold ${
+              isClickable ? "cursor-pointer" : "cursor-none"
+            }`}
           >
-            {index <= rating ? (
-              fillIcon
-            ) : (
-              icon
-            )}
+            {index <= rating ? fillIcon : icon}
           </button>
         );
       })}

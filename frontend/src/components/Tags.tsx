@@ -65,14 +65,14 @@ export default function Tags(props: TagsProps) {
 
       <div className="w-1/2 m-auto flex justify-center gap-2">
         <input
-          className="w-full rounded-md bg-black text-md md:text-3xl p-2 md:p-6 font-bold border-4 md:border-8 border-yellow-400"
+          className="w-full text-lg md:text-2xl lg:text-2xl p-2 md:p-6 rounded-md bg-black font-bold border-4 md:border-8 border-yellow-400 focus:outline-none"
           type="text"
           value={tag}
           onChange={(e) => setTag(e.target.value)}
         />
         <button
           type="button"
-          className="text-green-400 text-md md:text-2xl"
+          className="text-green-400 text-base md:text-2xl lg:text-3xl"
           onClick={handleAddTag}
         >
           <BsFillPlusSquareFill />
