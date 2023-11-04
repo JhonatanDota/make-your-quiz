@@ -64,31 +64,4 @@ class QuizRequest extends FormRequest
             Response::HTTP_BAD_REQUEST
         ));
     }
-
-    public function messages()
-    {
-        return [
-            'title.required' => 'The Title field is required.',
-            'title.min' => 'The Title field must be at least 3 characters long.',
-            
-            'description.required' => 'The Description field is required.',
-            'description.min' => 'The Description field must be at least 3 characters long.',
-            
-            'questions' => 'Each question must have a single correct alternative.',
-            'questions.required' => 'The Questions field is required.',
-            'questions.array' => 'The Questions field must be an array.',
-            
-            'questions.*.question.required' => 'The Question field is required for all questions.',
-            'questions.*.question.string' => 'The Question field must be a string for all questions.',
-            
-            'questions.*.alternatives.required' => 'The Alternatives field is required for all questions.',
-            'questions.*.alternatives.array' => 'The Alternatives field must be an array for all questions.',
-            
-            'questions.*.alternatives.*.choice.required' => 'The Choice field is required for all alternatives.',
-            'questions.*.alternatives.*.choice.string' => 'The Choice field must be a string for all alternatives.',
-            
-            'questions.*.alternatives.*.isCorrect.required' => 'The isCorrect field is required for all alternatives.',
-            'questions.*.alternatives.*.isCorrect.boolean' => 'The isCorrect field must be a boolean for all alternatives.',
-        ];
-    }
 }
